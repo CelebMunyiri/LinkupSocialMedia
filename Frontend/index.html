@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>LinkupSocialMedia</title>
 
     <link rel="stylesheet" href="style.css">
@@ -14,16 +15,17 @@
         <div class="logo">
             <img src="linkups-logo.jpg" alt="linkups logo">
         </div>
-        <form action="">
+        <form action="" class="registerForm">
             <h3>Join Linkups Today</h3>
-            <input type="text" placeholder="Name">
-            <input type="email" placeholder="email">
-            <input type="password" placeholder="Password">
-            <input type="password" placeholder="Confirm Password">
+            <input type="text" placeholder="Name" class="userName">
+            <input type="email" placeholder="email" class="userEmail">
+            <input type="password" placeholder="Password" class="userPassword">
+            <input type="password" placeholder="Confirm Password" class="confirmPassword">
             <button type="submit" class="signup">Sign Up</button>
             <p>Already have an account?</p>
             <button class="signin">Sign in</button>
         </form>
     </section>
+    <script src="index.js"></script>
 </body>
 </html>

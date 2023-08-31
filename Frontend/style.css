@@ -53,3 +53,21 @@ form button{
     border: 1px solid gray;
     background-color: white;
 }
+
+@media screen and (max-width:600px){
+    .section{
+        flex-direction: column;
+    }
+    .logo{
+        width: 100%;
+        height: 20%;
+    }
+    .logo img{
+        height: 80%;
+    }
+    form{
+        width: 100%;
+        height: 80%;
+    }
+
+}
