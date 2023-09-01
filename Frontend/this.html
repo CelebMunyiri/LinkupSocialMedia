@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post View Counter</title>
+</head>
+<body>
+  <h1>Post Title</h1>
+  <p>Post content goes here.</p>
+  <p>Views: <span id="view-count">0</span></p>
+
+  <script>
+    // Get the view count from local storage if available
+    let viewCount = parseInt(localStorage.getItem('postViewCount')) || 0;
+
+    // Update the view count on the page
+    const viewCountElement = document.getElementById('view-count');
+    viewCountElement.textContent = viewCount;
+
+    // Increment the view count and update local storage
+    function incrementViewCount() {
+      viewCount++;
+      localStorage.setItem('postViewCount', viewCount.toString());
+      viewCountElement.textContent = viewCount;
+    }
+
+    // Simulate a post view when the page loads
+    incrementViewCount();
+  </script>
+</body>
+</html>

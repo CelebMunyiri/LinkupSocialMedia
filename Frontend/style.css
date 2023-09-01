@@ -53,6 +53,20 @@ form button{
     border: 1px solid gray;
     background-color: white;
 }
+.error-text {
+    display: block;
+    color: red;
+    font-size: 14px;
+  }
+  
+  .password-mismatch {
+    border-color: red;
+  }
+  .resMessage{
+    color: green;
+    display: none;
+    
+  }
 
 @media screen and (max-width:600px){
     .section{
