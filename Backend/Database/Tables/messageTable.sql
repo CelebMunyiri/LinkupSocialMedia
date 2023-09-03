@@ -6,3 +6,5 @@ CREATE TABLE Messages (
     MessageContent NVARCHAR(MAX) NOT NULL,
     CreatedAt DATE DEFAULT GETDATE(),
 );
+
+

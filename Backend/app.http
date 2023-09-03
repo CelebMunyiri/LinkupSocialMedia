@@ -16,3 +16,16 @@ Content-Type: application/json
     "Email":"dawud@gmail.com",
     "PasswordHash":"12345678"
 }
+
+
+
+###Update user Bio
+
+PUT http://localhost:4600/user/update/1
+Content-Type: application/json
+
+{
+    "UserBio":"mambo ni mengi",
+    "UserProfile":"https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/33/505623/1.jpg",
+    "UserBackgroundImage":"https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/33/505623/1.jpg"
+}

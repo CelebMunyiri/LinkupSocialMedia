@@ -41,9 +41,9 @@ const loginUser=async(req,res)=>{
             const passwordComparing=await bcrypt.compare(PasswordHash,hashedPwd)
 
             if(passwordComparing){
-                const {PasswordHash,userID,...payload}=user
+                const {PasswordHash,userID,UserBio,UserProfile,UserBackgroundImage,...payload}=user
                 const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'360000'})
-                return res.status(200).json({message:"Logged in Succesful",token,userID})
+                return res.status(200).json({message:"Logged in Succesful",token,userID,UserBio,UserProfile,UserBackgroundImage})
             } else{
                 return res.status(401).json({message:"Failed to login"})
             }
@@ -54,11 +54,30 @@ const loginUser=async(req,res)=>{
     } catch (error) {
         return res.status(401).json({Error:error.message})
     }
-
-    
-
+}
+const updateUserBio=async(req,res)=>{
+    try {
+        const UserID=req.params.UserID
+        const {UserProfile,UserBio,UserBackgroundImage}=req.body 
+        const pool=await mssql.connect(sqlConfig)
+        const user=(await pool.request()
+        .input('UserID',UserID)
+        .input('UserProfile',UserProfile)
+        .input('UserBio',UserBio)
+        .input('UserBackgroundImage',UserBackgroundImage)
+        .execute('updateBioProc'))
+        if(user.rowsAffected==1){
+            return res.status(200).json({message:'Profile Updated Successfully',UserBio,UserBackgroundImage,UserProfile})
+        } else{
+            return res.status(401).json({message:"Error updating profile"})
+        }
+    } catch (error) {
+        return res.status(402).json({Error:error.message})
+    }
 }
 
+
+
 module.exports={
-    registerUser,loginUser
+    registerUser,loginUser,updateUserBio
 }

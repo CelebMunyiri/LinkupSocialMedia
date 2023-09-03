@@ -2,7 +2,7 @@ const mssql=require('mssql')
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { loginUser, registerUser } from "./authControllers";
+import { loginUser, registerUser, updateUserBio } from "./authControllers";
 
 const res = {
     status: jest.fn().mockReturnThis(),
@@ -57,7 +57,7 @@ const res = {
         });
         expect(res.status).toHaveBeenCalledWith(401);
       });
-    }); ///Registering a user test ends here
+    }); 
   
     
     describe("Test User Login", () => {
@@ -102,4 +102,53 @@ const res = {
         });
       }); 
     });
+
+    describe("Test for user update profile after registering and first login",()=>{
+      it("Should Enable user to update profile",async()=>{
+        const req={
+          body:{
+            UserBackgroundImage:'https://imageBackground',
+            UserProfile:'https://image2',
+            UserBio:"Iam a programmer"
+          },
+          params:{
+            UserID:1
+          }
+        }
+        
+        jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+          request:jest.fn().mockReturnThis(),
+          input:jest.fn().mockReturnThis(),
+          execute:jest.fn().mockResolvedValueOnce({
+            rowsAffected:1
+          })
+        })
+        await updateUserBio(req,res)
+
+        expect(res.status).toHaveBeenCalledWith(200)
+        //expect(res.json).toHaveBeenCalledWith({message:'Profile Updated Successfully',UserProfile,UserBackgroundImage,UserBio})
+      })
+      it("Should not update User Bio",async()=>{
+        const req={
+          body:{
+            UserBackgroundImage:'https://imageBackground',
+            UserProfile:'https://image2',
+            UserBio:"Iam a programmer"
+          },
+          params:{}
+        }
+        
+        jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+          request:jest.fn().mockReturnThis(),
+          input:jest.fn().mockReturnThis(),
+          execute:jest.fn().mockResolvedValueOnce({
+            rowsAffected:0
+          })
+        })
+        await updateUserBio(req,res)
+
+        expect(res.status).toHaveBeenCalledWith(401)
+        expect(res.json).toHaveBeenCalledWith({message:'Error updating profile'})
+      })
+    })
   });
