@@ -3,6 +3,7 @@ const signin=document.querySelector('.signin')
 const registerForm=document.querySelector('.registerForm')
 const userName=document.querySelector('.userName')
 const resMessage=document.querySelector('.resMessage')
+const userPassword=document.querySelector('.userPassword')
 const confirmPassword=document.querySelector('.confirmPassword')
 const passwordMismatchMessage = document.getElementById('password-mismatch');
 

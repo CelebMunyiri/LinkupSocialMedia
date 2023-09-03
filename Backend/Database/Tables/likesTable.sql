@@ -1,0 +1,6 @@
+CREATE TABLE Likes (
+    LikeID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL,
+    PostID INT NOT NULL,
+); 
+

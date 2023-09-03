@@ -1,0 +1,7 @@
+CREATE TABLE Comments (
+    CommentID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL,
+    PostID INT NOT NULL,
+    CommentText NVARCHAR(MAX) NOT NULL,
+    CreatedAt DATE DEFAULT GETDATE(),
+);
