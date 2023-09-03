@@ -1,8 +1,14 @@
 const express=require('express')
-const mssql=require('mssql')
 
+const { authRouter } = require('./Routes/authRoutes')
 const app=express()
 
-app.use(4600,()=>{
+app.use(express.json())
+
+
+
+app.use('/user',authRouter)
+
+app.listen(4600,()=>{
     console.log('server Running on port 4600')
 })

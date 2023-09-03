@@ -1,0 +1,18 @@
+POST http://localhost:4600/user/register
+Content-Type: application/json
+
+{
+    "Username":"dawud",
+    "Email":"dawud@gmail.com",
+    "PasswordHash":"12345678"
+}
+
+
+###User login
+POST http://localhost:4600/user/login
+Content-Type: application/json
+
+{
+    "Email":"dawud@gmail.com",
+    "PasswordHash":"12345678"
+}

@@ -1,0 +1,7 @@
+ALTER TABLE Followers
+ADD CONSTRAINT FK_Followers_User FOREIGN KEY (UserID)
+REFERENCES Users (UserID);
+
+ALTER TABLE Followers
+ADD CONSTRAINT FK_Followers_FollowerUser FOREIGN KEY (FollowerUserID)
+REFERENCES Users (UserID);

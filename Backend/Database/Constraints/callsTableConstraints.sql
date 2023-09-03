@@ -1,0 +1,8 @@
+
+ALTER TABLE Calls
+ADD CONSTRAINT FK_Calls_CallerUser FOREIGN KEY (CallerID)
+REFERENCES Users (UserID);
+
+ALTER TABLE Calls
+ADD CONSTRAINT FK_Calls_ReceiverUser FOREIGN KEY (ReceiverID)
+REFERENCES Users (UserID);
