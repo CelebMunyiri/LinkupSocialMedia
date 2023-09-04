@@ -4,3 +4,5 @@ BEGIN
 INSERT INTO Followers(UserID,FollowerUserID)
 VALUES (@UserID,@FollowerUserID)
 END;
+
+select * from Followers

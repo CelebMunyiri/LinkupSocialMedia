@@ -42,6 +42,25 @@ const Unfollow=async(req,res)=>{
     }
 }
 
+const viewFollowers=async(req,res)=>{
+    try {
+        const UserID=req.params.UserID
+        const pool = await mssql.connect(sqlConfig);
+        const result = (await pool.request()
+            .input('UserID', mssql.Int, UserID)
+            .execute('ViewFollowersOfUser')).recordsets;
+
+        if(result){
+            return res.json({result})
+        }
+
+       
+
+    } catch (error) {
+        return res.status(402).json({Error:error.message})
+    }
+}
+
 module.exports={
-    follow,Unfollow
+    follow,Unfollow,viewFollowers
 }

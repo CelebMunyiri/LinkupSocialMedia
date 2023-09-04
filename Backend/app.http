@@ -51,3 +51,6 @@ Content-Type: application/json
     "FollowerUserID":"1"
 }
 
+
+###view followers
+GET http://localhost:4600/followActions/viewfollowers/2
