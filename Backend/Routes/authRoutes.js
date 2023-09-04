@@ -3,7 +3,7 @@ const { registerUser, loginUser, updateUserBio } = require('../Controllers/authC
 const authRouter=Router()
 
 authRouter.post('/register',registerUser)
-authRouter.post('/login',loginUser)
+authRouter.post('/login', loginUser)
 authRouter.put('/update/:UserID',updateUserBio)
 
 module.exports={

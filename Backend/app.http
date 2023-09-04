@@ -2,8 +2,8 @@ POST http://localhost:4600/user/register
 Content-Type: application/json
 
 {
-    "Username":"dawud",
-    "Email":"dawud@gmail.com",
+    "Username":"mahubali",
+    "Email":"Mahubali123@gmail.com",
     "PasswordHash":"12345678"
 }
 
@@ -29,3 +29,25 @@ Content-Type: application/json
     "UserProfile":"https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/33/505623/1.jpg",
     "UserBackgroundImage":"https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/33/505623/1.jpg"
 }
+
+
+###follow actions
+###follow
+POST http://localhost:4600/followActions/follow
+Content-Type: application/json
+
+{
+    "UserID":"2",
+    "FollowerUserID":"1"
+}
+
+
+###unfollow
+POST http://localhost:4600/followActions/unfollow
+Content-Type: application/json
+
+{
+    "UserID":"2",
+    "FollowerUserID":"1"
+}
+
