@@ -118,5 +118,19 @@ it("Should not delete a post when not provide with the Post ID",async()=>{
               await viewAllPosts(req,res)
               expect(res.status).toHaveBeenCalledWith(200) 
         })
+        it("Should not display any posts",async()=>{
+            const req={
+                body:{}
+            }
+            jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+                request:jest.fn().mockReturnThis(),
+                execute:jest.fn().mockResolvedValueOnce({
+                    result:''
+                })
+            })
+            await viewAllPosts(req,res) 
+            expect(res.status).toHaveBeenCalledWith(401)
+            expect(res.json).toHaveBeenCalledWith({message:"Failed to load posts"})
+        })
     })
 })
