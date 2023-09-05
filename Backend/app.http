@@ -57,4 +57,21 @@ GET http://localhost:4600/followActions/viewfollowing/2
 
 
 ###view followers
-GET http://localhost:4600/followActions/viewfollowers/2
+GET http://localhost:4600/followActions/viewfollowers/1 
+
+
+
+###create post
+POST http://localhost:4600/postActions/createPost
+Content-Type: application/json
+
+{
+    "UserID":"1",
+    "PostContent":"Supporting Arsenal is a not do thing"
+}
+
+
+###Delete Post
+DELETE http://localhost:4600/postActions/deletePost/1
+
+

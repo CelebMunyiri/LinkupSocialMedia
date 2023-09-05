@@ -5,3 +5,5 @@ ADD CONSTRAINT FK_Posts_User FOREIGN KEY (UserID)
 REFERENCES Users (UserID);
 
 CREATE INDEX IX_Posts_UserID ON Posts (UserID);
+
+
