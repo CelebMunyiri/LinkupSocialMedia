@@ -1,11 +1,12 @@
 const Router=require('express')
-const { follow, Unfollow, viewFollowers } = require('../Controllers/followActions')
+const { follow, Unfollow, viewFollowers, viewFollowing } = require('../Controllers/followActions')
 
 const followActionsRouter=Router()
 
 followActionsRouter.post('/follow',follow)
 followActionsRouter.post('/unfollow',Unfollow)
-followActionsRouter.get('/viewfollowers/:UserID',viewFollowers)
+followActionsRouter.get('/viewfollowing/:UserID',viewFollowers)
+followActionsRouter.get('/viewfollowers/:UserID',viewFollowing)
 
 
 module.exports={

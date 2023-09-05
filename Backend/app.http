@@ -52,5 +52,9 @@ Content-Type: application/json
 }
 
 
+###view followings
+GET http://localhost:4600/followActions/viewfollowing/2
+
+
 ###view followers
 GET http://localhost:4600/followActions/viewfollowers/2

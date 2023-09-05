@@ -53,14 +53,27 @@ const viewFollowers=async(req,res)=>{
         if(result){
             return res.status(200).json({result})
         }
-
-       
-
     } catch (error) {
         return res.status(402).json({Error:error.message})
     }
 }
+const viewFollowing=async(req,res)=>{
+    try {
+        const UserID=req.params.UserID
 
+        const pool=await mssql.connect(sqlConfig)
+        const result=(await pool.request()
+        .input('UserID',mssql.Int,UserID)
+        .execute('ViewFollowingByUser')).recordsets 
+
+        if(result){
+            return res.status(200).json({result})
+        }
+        
+    } catch (error) {
+      return res.status(402).json({Error:error.message})  
+    }
+}
 module.exports={
-    follow,Unfollow,viewFollowers
+    follow,Unfollow,viewFollowers,viewFollowing
 }
