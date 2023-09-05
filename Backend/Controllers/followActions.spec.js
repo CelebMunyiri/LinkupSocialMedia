@@ -1,5 +1,5 @@
 const mssql=require('mssql');
-const { follow, Unfollow } = require('./followActions');
+const { follow, Unfollow, viewFollowers } = require('./followActions');
 
 
 const res = {
@@ -77,5 +77,31 @@ const res = {
 
       expect(res.status).toHaveBeenCalledWith(401) 
       expect(res.json).toHaveBeenCalledWith({message:'Failed to Unfollow'})
+    })
+    it("Should display followers of a user using his UserID",async()=>{
+      const mockResult=
+      {
+        "result": [
+          [
+            {
+              "FollowerUsername": "dawud"
+            }
+          ]
+        ]
+      }
+      const req={
+params:{
+  UserID:1
+}
+      }
+      jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+        request:jest.fn().mockReturnThis(),
+        input:jest.fn().mockReturnThis(),
+        execute:jest.fn().mockResolvedValueOnce({result:mockResult
+        })
+      })
+      await viewFollowers(req,res)
+      expect(res.status).toHaveBeenCalledWith(200)
+       
     })
   })

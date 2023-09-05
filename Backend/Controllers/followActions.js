@@ -51,7 +51,7 @@ const viewFollowers=async(req,res)=>{
             .execute('ViewFollowersOfUser')).recordsets;
 
         if(result){
-            return res.json({result})
+            return res.status(200).json({result})
         }
 
        
