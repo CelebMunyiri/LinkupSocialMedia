@@ -41,6 +41,22 @@ const deletePost=async(req,res)=>{
     }
 }
 
+const viewAllPosts=async(req,res)=>{
+    try {
+        const pool=await mssql.connect(sqlConfig)
+        const result=(await pool.request()
+        .execute('viewAllPosts')).recordsets
+
+        if(result){
+            return res.status(200).json({result})
+        } else{
+            return res.status(401).json({message:"Failed to load posts"})
+        }
+    } catch (error) {
+      return res.status(402).json({Error:error.message})  
+    }
+}
+
 module.exports={
-    createPost,deletePost
+    createPost,deletePost, viewAllPosts
 }

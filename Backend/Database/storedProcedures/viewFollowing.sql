@@ -6,4 +6,5 @@ BEGIN
     FROM Users U
     INNER JOIN Followers F ON U.UserID = F.FollowerUserID
     WHERE F.UserID = @UserID;
-END;
+END; 
+

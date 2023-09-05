@@ -1,5 +1,5 @@
 const express=require('express')
-
+const helmet=require('helmet')
 const { authRouter } = require('./Routes/authRoutes')
 const { followActionsRouter } = require('./Routes/followActionRoutes')
 const { postRouter } = require('./Routes/postRoutes')
@@ -7,6 +7,7 @@ const { commentRouter } = require('./Routes/commentRoutes')
 const app=express()
 
 app.use(express.json())
+app.use(helmet())
 
 
 

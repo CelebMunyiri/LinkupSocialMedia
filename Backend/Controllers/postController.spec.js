@@ -1,5 +1,5 @@
 const mssql=require('mssql');
-const { createPost, deletePost } = require('./postController');
+const { createPost, deletePost, viewAllPosts } = require('./postController');
 
 const res = {
     status: jest.fn().mockReturnThis(),
@@ -81,5 +81,42 @@ it("Should not delete a post when not provide with the Post ID",async()=>{
     expect(res.status).toHaveBeenCalledWith(401)
     expect(res.json).toHaveBeenCalledWith({message:"Failed deleting Post"})
 })
+    })
+    describe("Test fro displaying all posts",()=>{
+        it("Should display all posts in the database",async()=>{
+            const mockResult={
+                "result": [
+                  [
+                    {
+                      "PostID": 2,
+                      "UserID": 1,
+                      "PostContent": "Supporting Arsenal is a not do thing",
+                      "PostType": null,
+                      "CreatedAt": "2023-09-05T00:00:00.000Z",
+                      "VideoUrl": null,
+                      "ImageUrl": null
+                    },
+                    {
+                      "PostID": 3,
+                      "UserID": 1,
+                      "PostContent": "Supporting Arsenal is a not do thing",
+                      "PostType": null,
+                      "CreatedAt": "2023-09-05T00:00:00.000Z",
+                      "VideoUrl": null,
+                      "ImageUrl": null
+                    }
+                  ]
+                ]
+              }
+              const req={
+                body:{}
+              }
+              jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+                execute:jest.fn().mockResolvedValueOnce({ 
+                    result:mockResult })
+              })
+              await viewAllPosts(req,res)
+              expect(res.status).toHaveBeenCalledWith(200) 
+        })
     })
 })
