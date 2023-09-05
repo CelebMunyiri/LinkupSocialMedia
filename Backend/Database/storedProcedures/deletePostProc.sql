@@ -4,3 +4,4 @@ BEGIN
 DELETE FROM Posts
 WHERE PostID=@PostID
 END;
+

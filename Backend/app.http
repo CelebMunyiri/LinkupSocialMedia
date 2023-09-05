@@ -75,3 +75,16 @@ Content-Type: application/json
 DELETE http://localhost:4600/postActions/deletePost/1
 
 
+###create comment
+POST http://localhost:4600/commentActions/createComment
+Content-Type: application/json
+
+{
+    "UserID":"2",
+    "PostID":"2",
+    "CommentText":"Thats why i support manchester City"
+}
+
+
+###deete comment
+DELETE http://localhost:4600/commentActions/deleteComment/3
