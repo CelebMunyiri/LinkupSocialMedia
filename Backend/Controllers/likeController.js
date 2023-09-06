@@ -39,6 +39,23 @@ const unlikePost=async(req,res)=>{
     }
 }
 
+const viewLikesofOne=async(req,res)=>{
+   try {
+    const UserID=req.params.UserID
+    const pool=await mssql.connect(sqlConfig)
+    const result=(await pool.request()
+    .input("UserID",UserID)
+    .execute('viewLikesofOne')).recordsets
+    if(result){
+        return res.status(200).json({result})
+    } else {
+        return res.status(401).json({message:"failed to fetch the likes of this user"})
+    }
+   } catch (error) {
+    return res.status(402).json({Error:error.message})
+   }
+}
+
 module.exports={
-    likePost,unlikePost
+    likePost,unlikePost,viewLikesofOne
 }

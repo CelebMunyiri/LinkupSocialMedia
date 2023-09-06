@@ -37,8 +37,8 @@ POST http://localhost:4600/followActions/follow
 Content-Type: application/json
 
 {
-    "UserID":"2",
-    "FollowerUserID":"1"
+    "UserID":"1",
+    "FollowerUserID":"2"
 }
 
 
@@ -121,3 +121,26 @@ Content-Type: application/json
 DELETE http://localhost:4600/like/unlike/1
 Content-Type: application/json
 
+
+###Likes of one
+GET http://localhost:4600/like/likesOfOne/1
+Content-Type: application/json
+
+
+###Comments of one
+GET http://localhost:4600/commentActions/commentsOfOne/2
+Content-Type: application/json
+
+###send notification
+POST http://localhost:4600/notification/send
+Content-Type: application/json
+
+{
+    "UserID":"1",
+    "SenderID":"2",
+    "NotificationText":"Munyiri started following you"
+}
+
+###get notification
+GET http://localhost:4600/notification/get/1
+Content-Type: application/json

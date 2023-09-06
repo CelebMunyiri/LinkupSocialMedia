@@ -5,6 +5,9 @@ const Home=document.querySelector('.Home')
 home.addEventListener('click',()=>{
     Home.style.display='block'
     Explore.style.display='none'
+    messagePeople.style.display='none'
+    Messages.style.display='none'
+    Notification.style.display='none'
 })
 
 const explore=document.querySelector('.explore')
@@ -12,6 +15,9 @@ const Explore=document.querySelector('.Explore')
 explore.addEventListener('click',()=>{
     Explore.style.display='block'
     Home.style.display='none'
+    messagePeople.style.display='none'
+    Messages.style.display='none'
+    Notification.style.display='none'
 })
 
 const notification=document.querySelector('.notification')
@@ -21,6 +27,8 @@ notification.addEventListener('click',()=>{
     Notification.style.display='block'
     Home.style.display='none'
     Explore.style.display='none'
+    messagePeople.style.display='none'
+    Messages.style.display='none'
 })
 
 const Messages=document.querySelector('.Messages')
@@ -33,6 +41,7 @@ messagingBtn.addEventListener('click',()=>{
     Explore.style.display='none'
     Home.style.display='none'
     Notification.style.display='none'
+    Messages.style.display='none'
 })
 
 messagingContainer.forEach(element => {

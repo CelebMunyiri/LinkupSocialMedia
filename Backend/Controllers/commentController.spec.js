@@ -1,5 +1,5 @@
 const mssql=require('mssql');
-const { createComment, deleteComment, displayAllComments, updateComment } = require('./commentController');
+const { createComment, deleteComment, displayAllComments, updateComment, getCommentsOfOne } = require('./commentController');
 
 
 const res = {
@@ -157,6 +157,57 @@ params:{
             await updateComment(req,res)
             expect(res.status).toHaveBeenCalledWith(401)
             expect(res.json).toHaveBeenCalledWith({message:"Failed Updating Comment"})
+        })
+    })
+    describe("Test for viewing posts a user has liked",()=>{
+        it("Should show posts a user has liked",async()=>{
+            const mockResult={
+                "result": [
+                  [
+                    {
+                      "VideoUrl": null,
+                      "PostContent": "Supporting Arsenal is a not do thing",
+                      "ImageUrl": null,
+                      "UserID": 1
+                    }
+                  ]
+                ]
+              }
+              const req={
+                params:{
+                    UserID:1
+                }
+              }
+    
+              jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+                request:jest.fn().mockReturnThis(),
+                input:jest.fn().mockReturnThis(),
+                execute:jest.fn().mockResolvedValueOnce({
+                    result:mockResult
+                })
+              })
+              
+              await getCommentsOfOne(req,res)
+    
+              expect(res.status).toHaveBeenCalledWith(200)
+        })
+        it("Should not show Commnets of a user  when not given a UserID",async()=>{
+            
+              const req={
+                params:{
+     }
+              }
+    
+              jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+                request:jest.fn().mockReturnThis(),
+                input:jest.fn().mockReturnThis(),
+                execute:jest.fn().mockResolvedValueOnce({ })
+              })
+              
+              await getCommentsOfOne(req,res)
+    
+              expect(res.status).toHaveBeenCalledWith(401)
+              expect(res.json).toHaveBeenCalledWith({message:"failed to fetch the Comments of this user"})
         })
     })
 })

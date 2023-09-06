@@ -1,6 +1,6 @@
 const mssql=require('mssql');
 const { createPost, deletePost, viewAllPosts } = require('./postController');
-const { likePost, unlikePost } = require('./likeController');
+const { likePost, unlikePost, viewLikesofOne } = require('./likeController');
 
 const res = {
     status: jest.fn().mockReturnThis(),
@@ -81,6 +81,57 @@ describe("Tests for unliking a post",()=>{
         
         expect(res.status).toHaveBeenCalledWith(401)
         expect(res.json).toHaveBeenCalledWith({message:"Failed to unlike post"})
+    })
+})
+describe("Test for viewing posts a user has liked",()=>{
+    it("Should show posts a user has liked",async()=>{
+        const mockResult={
+            "result": [
+              [
+                {
+                  "VideoUrl": null,
+                  "PostContent": "Supporting Arsenal is a not do thing",
+                  "ImageUrl": null,
+                  "UserID": 1
+                }
+              ]
+            ]
+          }
+          const req={
+            params:{
+                UserID:1
+            }
+          }
+
+          jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+            request:jest.fn().mockReturnThis(),
+            input:jest.fn().mockReturnThis(),
+            execute:jest.fn().mockResolvedValueOnce({
+                result:mockResult
+            })
+          })
+          
+          await viewLikesofOne(req,res)
+
+          expect(res.status).toHaveBeenCalledWith(200)
+    })
+    it("Should not show posts a user has liked when not given a UserID",async()=>{
+        
+          const req={
+            params:{
+ }
+          }
+
+          jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+            request:jest.fn().mockReturnThis(),
+            input:jest.fn().mockReturnThis(),
+            execute:jest.fn().mockResolvedValueOnce({ })
+          })
+          
+          await viewLikesofOne(req,res)
+
+          expect(res.status).toHaveBeenCalledWith(401)
+          expect(res.json).toHaveBeenCalledWith({message:"failed to fetch the likes of this user"})
     })
 })
   })

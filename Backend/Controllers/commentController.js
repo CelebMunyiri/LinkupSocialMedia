@@ -78,7 +78,23 @@ const displayAllComments=async(req,res)=>{
     }
 }
 
+const getCommentsOfOne=async(req,res)=>{
+    try {
+        const UserID=req.params.UserID
+        const pool=await mssql.connect(sqlConfig)
+        const result=(await pool.request()
+        .input("UserID",UserID)
+        .execute('viewCommentsofOne')).recordsets
+        if(result){
+            return res.status(200).json({result})
+        } else {
+            return res.status(401).json({message:"failed to fetch the Comments of this user"})
+        }
+    } catch (error) {
+        return res.status(402).json({Error:error.message})
+    }
+}
 
 module.exports={
-    createComment,deleteComment,updateComment,displayAllComments
+    createComment,deleteComment,updateComment,displayAllComments, getCommentsOfOne
 }

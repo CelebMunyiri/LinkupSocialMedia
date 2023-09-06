@@ -1,8 +1,8 @@
- *{
+*{
     margin: 0;
     padding: 0;
-    overflow-x: hidden; 
-    overflow-y: auto;
+    box-sizing: border-box;
+    
 } 
 body{
     width: 100vw;
@@ -17,7 +17,6 @@ display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
-    /* position: fixed; */
 }
 .content{
     width: 50%;
@@ -26,12 +25,10 @@ display: flex;
     display: flex;
     justify-content: center;
     padding-top:10px ;
-    
 }
 .follow{
     width: 25%;
     height: 100%;
-    /* position: fixed; */
 }
 .navigation img{
     width: 80px;
@@ -89,7 +86,7 @@ display: flex;
     width: 100%;
     height: 100%;
     overflow-y: scroll;
-    display: none;
+    display: block;
 }
 .PostingDiv{
     width: 98%;
@@ -205,7 +202,7 @@ padding: 20px;
     width: 100%;
     height: 100%;
     display: none;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 .messagePerson{
     width: 100%;
@@ -220,7 +217,7 @@ padding: 20px;
 }
 .Messages{
     width: 100%;
-     height: 100%; 
+    height: 100%;
     display: none;
     
 }
@@ -231,14 +228,10 @@ padding: 20px;
     align-items: center;
     padding-left: 10px;
     border-bottom: 1px solid gray;
-    position: fixed;
-    top: 0px;
-    background: white;
 }
-/* .headMessaging{
+.headMessaging{
     height: 5%;
-
-} */
+}
 
 .MessageHeader img{
     width: 11%;
@@ -256,7 +249,7 @@ padding: 20px;
 .senderDiv{
     width: 90%;
     background:gray ;
-    height: 500px;
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -265,17 +258,17 @@ padding: 20px;
 .receiverDiv{
     width: 90%;
     background:blue ;
-    height: 500px;
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top:5px ;
     margin-left: 10%;
     border-radius:10px 10px 0px 10px;
 }
 .inputDiv{
     width: 100%;
     height: 10%;
-    border: 1px solid green;
 }
 .inputDiv input{
     height: 100%;
@@ -300,6 +293,33 @@ padding: 20px;
     height: 80%;
     overflow-y: scroll;
 }
+.hidden{
+    display: none;
+}
+.reactionPart{
+    width: 100%;
+    height: 20%;
+    justify-content: space-evenly;
+}
+.followHim{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+.followHim button{
+    background-color: blue;
+    outline: none;
+    border: none;
+    /* border-radius: 10px; */
+    color: white;
+    height: 40px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 @media screen and (max-width:600px){
     body{
@@ -311,15 +331,12 @@ padding: 20px;
     .follow{
         width: 0;
         height: 0;
-        display: none;
     }
     .navigation{
         width: 100%;
         height: 10%;
         flex-direction: row;
         order: 2;
-        position: fixed;
-        bottom: 0px;
     }
     .content{
         width: 100%;
