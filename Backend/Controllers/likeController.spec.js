@@ -1,5 +1,5 @@
 const mssql=require('mssql');
-const { createPost, deletePost, viewAllPosts } = require('./postController');
+
 const { likePost, unlikePost, viewLikesofOne } = require('./likeController');
 
 const res = {
