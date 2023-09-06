@@ -106,3 +106,18 @@ Content-Type: application/json
 ###GET ALL COMMENTS
 GET http://localhost:4600/commentActions/viewAllComments
 Content-Type: application/json
+
+
+###add like
+POST http://localhost:4600/like/addlike
+Content-Type: application/json
+
+{
+    "UserID":"1",
+    "PostID":"2"
+}
+
+###unlike post
+DELETE http://localhost:4600/like/unlike/1
+Content-Type: application/json
+

@@ -1,0 +1,5 @@
+CREATE OR ALTER PROCEDURE likePostProc (@UserID INT,@PostID INT)
+AS 
+BEGIN 
+INSERT INTO Likes(UserID,PostID) VALUES (@UserID,@PostID)
+END;

@@ -1,8 +1,8 @@
  *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    overflow: hidden;
+    overflow-x: hidden; 
+    overflow-y: auto;
 } 
 body{
     width: 100vw;
@@ -17,6 +17,7 @@ display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
+    /* position: fixed; */
 }
 .content{
     width: 50%;
@@ -25,10 +26,12 @@ display: flex;
     display: flex;
     justify-content: center;
     padding-top:10px ;
+    
 }
 .follow{
     width: 25%;
     height: 100%;
+    /* position: fixed; */
 }
 .navigation img{
     width: 80px;
@@ -202,7 +205,7 @@ padding: 20px;
     width: 100%;
     height: 100%;
     display: none;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .messagePerson{
     width: 100%;
@@ -217,7 +220,7 @@ padding: 20px;
 }
 .Messages{
     width: 100%;
-    height: 100%;
+     height: 100%; 
     display: none;
     
 }
@@ -228,10 +231,14 @@ padding: 20px;
     align-items: center;
     padding-left: 10px;
     border-bottom: 1px solid gray;
+    position: fixed;
+    top: 0px;
+    background: white;
 }
-.headMessaging{
+/* .headMessaging{
     height: 5%;
-}
+
+} */
 
 .MessageHeader img{
     width: 11%;
@@ -249,7 +256,7 @@ padding: 20px;
 .senderDiv{
     width: 90%;
     background:gray ;
-    height: 300px;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -258,7 +265,7 @@ padding: 20px;
 .receiverDiv{
     width: 90%;
     background:blue ;
-    height: 300px;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -268,6 +275,7 @@ padding: 20px;
 .inputDiv{
     width: 100%;
     height: 10%;
+    border: 1px solid green;
 }
 .inputDiv input{
     height: 100%;
@@ -303,12 +311,15 @@ padding: 20px;
     .follow{
         width: 0;
         height: 0;
+        display: none;
     }
     .navigation{
         width: 100%;
         height: 10%;
         flex-direction: row;
         order: 2;
+        position: fixed;
+        bottom: 0px;
     }
     .content{
         width: 100%;

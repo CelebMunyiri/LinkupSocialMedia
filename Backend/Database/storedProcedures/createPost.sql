@@ -4,3 +4,4 @@ BEGIN
 INSERT INTO Posts(UserID,PostContent,VideoUrl,ImageUrl)
 VALUES (@UserID,@PostContent,@VideoUrl,@ImageUrl)
 END;
+
