@@ -2,6 +2,7 @@
 const signin=document.querySelector('.signin')
 const registerForm=document.querySelector('.registerForm')
 const userName=document.querySelector('.userName')
+const userEmail=document.querySelector('.userEmail')
 const resMessage=document.querySelector('.resMessage')
 const userPassword=document.querySelector('.userPassword')
 const confirmPassword=document.querySelector('.confirmPassword')
@@ -29,16 +30,24 @@ registerForm.addEventListener('submit',(e)=>{
     e.preventDefault()
 
 
-    axios.post('/user', {
-        userName: userName.value,
-        userEmail:userEmail.value,
-        userPassword:confirmPassword.value,
-      })
+    axios.post('http://localhost:4600/user/register',
+     {
+        Username: userName.value,
+        Email:userEmail.value,
+        PasswordHash:confirmPassword.value,
+      },{
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+      )
       .then((response) =>{
         console.log(response);
-        resMessage.computedStyleMap.display="block"
+        resMessage.style.display="block"
         resMessage.textContent="Registered successfully"
-      })
+window.location.href='/Frontend/login.html'
+      }
+      )
       .catch((error) =>{
         console.log(error);
       })

@@ -7,3 +7,4 @@ CREATE TABLE Calls (
     StartTime DATE DEFAULT GETDATE(),
     EndTime DATE DEFAULT GETDATE(),
 );
+

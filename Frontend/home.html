@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <title>Linkups</title>
     <link rel="stylesheet" href="home.css">
@@ -51,21 +53,7 @@
             <h4>Following</h4>
         </div>
         <div class="lower-posts">
-            <div class="post-body">
-                <div class="post-head">
-                    <img src="chacha.jpg" alt="">
-                    <h6>Chacha_Ndemo</h6>
-                    <p>@chacha_ndemo</p>
-                </div>
-                <div class="post-content">
-                    <p>Naitwa ndemo kutoka kisiiiw</p>
-                    <div class="reactionPart">
-                        <iconify-icon icon="iconamoon:comment-light" style="color: black;"></iconify-icon>
-                        <iconify-icon icon="system-uicons:retweet" style="color: black;"></iconify-icon>
-                        <iconify-icon icon="fluent-mdl2:like" style="color: black;"></iconify-icon>
-                    </div>
-                </div>
-            </div>
+           
             
         </div>
     </div>
@@ -115,10 +103,14 @@
             <iconify-icon icon="radix-icons:cross-1" class="closePost"></iconify-icon>
             <p>New Post</p>
         </div>
-        <div class="postBody">
-            <input type="text" placeholder="Start typing here">
-            <div class="imagePost">Select from storage</div>
-        </div>
+        <form action="" class="postBody" id="post-form">
+            <textarea id="post-text" placeholder="start Typing here"></textarea>
+            <iconify-icon icon="ion:images-outline" style="color: black;"></iconify-icon>
+            <input type="file" id="post-image" accept="image/*"/>
+            <iconify-icon icon="radix-icons:video" style="color: black;"></iconify-icon>
+            <input type="file" id="post-video" accept="video/*" />
+            <button type="submit" id="post-button" class="imagePost">Post</button>
+        </form>
     </div>
     <div class="profileContent">
         <div class="profileHead"> 

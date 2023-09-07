@@ -6,3 +6,4 @@ Comments(PostID,UserID,CommentText)
  VALUES
 (@PostID,@UserID,@CommentText)
 END;
+

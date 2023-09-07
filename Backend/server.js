@@ -1,5 +1,8 @@
 const express=require('express')
 const helmet=require('helmet')
+const cors=require('cors')
+const bodyParser=require('body-parser')
+
 const { authRouter } = require('./Routes/authRoutes')
 const { followActionsRouter } = require('./Routes/followActionRoutes')
 const { postRouter } = require('./Routes/postRoutes')
@@ -7,8 +10,12 @@ const { commentRouter } = require('./Routes/commentRoutes')
 const { likeRouter } = require('./Routes/likeRoutes')
 const { notificationRoute } = require('./Routes/notificationRoute')
 const app=express()
-
 app.use(express.json())
+
+app.use(cors())
+app.use(bodyParser.urlencoded({extended:true}))
+
+
 app.use(helmet())
 
 

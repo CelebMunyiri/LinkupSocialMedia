@@ -48,6 +48,7 @@ const viewAllPosts=async(req,res)=>{
         .execute('viewAllPosts')).recordsets
 
         if(result){
+
             return res.status(200).json({result})
         } else{
             return res.status(401).json({message:"Failed to load posts"})

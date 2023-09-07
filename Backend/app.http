@@ -78,6 +78,9 @@ DELETE http://localhost:4600/postActions/deletePost/1
 ###view all posts
 GET http://localhost:4600/postActions/viewAllPosts
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImRhd3VkIiwiRW1haWwiOiJkYXd1ZEBnbWFpbC5jb20iLCJDcmVhdGVkQXQiOiIyMDIzLTA5LTAzVDAwOjAwOjAwLjAwMFoiLCJpYXQiOjE2OTQwODc0MzAsImV4cCI6MTY5NDA4Nzc5MH0.2Deyv2fIp4jkfFaWscDtQQGq3otwD7Kepb30WFNgLbw
+
+
 
 ###create comment
 POST http://localhost:4600/commentActions/createComment

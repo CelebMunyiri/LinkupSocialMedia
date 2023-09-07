@@ -9,22 +9,45 @@ signup.addEventListener('click',()=>{
     window.location='./index.html'
 })
 
+let tokenToUse=''
+let UserID=''
+let UserBio=''
+let UserProfile=''
 loginForm.addEventListener('submit',(e)=>{
     e.preventDefault()
 
 
-    axios.post('/user', {
-        userName: userName.value,
-        userEmail:userEmail.value,
-        userPassword:confirmPassword.value,
+    axios
+    .post('http://localhost:4600/user/login', {
+        Email:userEmail.value,
+        PasswordHash:userPassword.value,
+      },{
+        headers: {
+          "Content-type": "application/json",
+        },
       })
-      .then((response) =>{
-        console.log(response);
+      .then((res) =>{
+        console.log(res);
+       
+        tokenToUse=res.data.token
+        localStorage.setItem('tokenToUse',tokenToUse)
+
+        UserBio=res.data.UserBio
+        localStorage.setItem('UserBio',UserBio)
+
+        UserID=res.data.UserID
+        localStorage.setItem('UserID',UserID)
+
+        UserProfile=res.data.UserProfile
+        localStorage.setItem('UserProfile',UserProfile)
+        
+        resMessage.style.display="block"
+        resMessage.textContent="Logged in Successfully"
+        window.location.href='./home.html'
       })
       .catch((error) =>{
         console.log(error);
-        resMessage.computedStyleMap.display="block"
-        resMessage.textContent="Loggen in Successfully"
+        
       })
 
 })
