@@ -80,10 +80,10 @@ const displayAllComments=async(req,res)=>{
 
 const getCommentsOfOne=async(req,res)=>{
     try {
-        const UserID=req.params.UserID
+        const PostID=req.params.PostID
         const pool=await mssql.connect(sqlConfig)
         const result=(await pool.request()
-        .input("UserID",UserID)
+        .input("PostID",PostID)
         .execute('viewCommentsofOne')).recordsets
         if(result){
             return res.status(200).json({result})

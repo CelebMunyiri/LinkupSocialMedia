@@ -78,7 +78,7 @@ DELETE http://localhost:4600/postActions/deletePost/1
 ###view all posts
 GET http://localhost:4600/postActions/viewAllPosts
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImRhd3VkIiwiRW1haWwiOiJkYXd1ZEBnbWFpbC5jb20iLCJDcmVhdGVkQXQiOiIyMDIzLTA5LTAzVDAwOjAwOjAwLjAwMFoiLCJpYXQiOjE2OTQwODc0MzAsImV4cCI6MTY5NDA4Nzc5MH0.2Deyv2fIp4jkfFaWscDtQQGq3otwD7Kepb30WFNgLbw
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImRhd3VkIiwiRW1haWwiOiJkYXd1ZEBnbWFpbC5jb20iLCJDcmVhdGVkQXQiOiIyMDIzLTA5LTAzVDAwOjAwOjAwLjAwMFoiLCJpYXQiOjE2OTQxNjMwNjAsImV4cCI6MTY5NDE2NjY2MH0.JKhQ5-hwd1OCv8izNhU8UiW3sFLVK18HwjZBn09c2ws
 
 
 
@@ -126,12 +126,12 @@ Content-Type: application/json
 
 
 ###Likes of one
-GET http://localhost:4600/like/likesOfOne/1
+GET http://localhost:4600/like/likesOfOne/1002
 Content-Type: application/json
 
 
 ###Comments of one
-GET http://localhost:4600/commentActions/commentsOfOne/2
+GET http://localhost:4600/commentActions/commentsOfOne/2013
 Content-Type: application/json
 
 ###send notification

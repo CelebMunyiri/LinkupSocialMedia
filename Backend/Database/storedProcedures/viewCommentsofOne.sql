@@ -1,0 +1,6 @@
+CREATE OR ALTER PROCEDURE viewCommentsofOne(@PostID INT)
+AS 
+BEGIN 
+SELECT * FROM Comments 
+WHERE PostID=@PostID
+END;

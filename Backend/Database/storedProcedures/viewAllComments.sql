@@ -3,3 +3,4 @@ AS
 BEGIN 
 SELECT * FROM Comments 
 END;
+

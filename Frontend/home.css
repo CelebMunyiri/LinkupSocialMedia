@@ -155,7 +155,7 @@ display: hidden;
 }
 .post-body{
     width: 100%;
-    height: 40%;
+    
     
 }
 .post-head{
@@ -169,6 +169,10 @@ display: hidden;
     width: 10%;
     height: 90%;
     border-radius: 50%;
+}
+.post-content img{
+    width: 100px;
+    height: 300px;
 }
 
 .Explore{
@@ -352,6 +356,23 @@ padding: 20px;
 }
 .unlike{
     display: none;
+}
+.commentSection{
+    width: 100%;
+}
+.hide{
+    display:none;
+}
+.comments-container{
+    width: 100%;
+    height: 200px;
+    border: 1px solid green;
+}
+.commentSection input{
+outline: none;
+border: none;
+padding: 15px;
+margin: auto;
 }
 @media screen and (max-width:600px){
     .upper-navigation{

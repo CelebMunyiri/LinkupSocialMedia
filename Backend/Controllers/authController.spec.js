@@ -95,13 +95,12 @@ const res = {
   
         await loginUser(req, res);
   
+        expect(res.status).toHaveBeenCalledWith(200)
         expect(res.json).toHaveBeenCalledWith({
           message: "Logged in Succesful",
-          token: "mockedToken",
-  
-        });
+          token: "mockedToken",UserProfile:"hhhhh",UserID:"6",UserBio:"jjhh",UserBackgroundImage:"jhvgvyyy"});
       }); 
-    });
+    }); 
 
     describe("Test for user update profile after registering and first login",()=>{
       it("Should Enable user to update profile",async()=>{

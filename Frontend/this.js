@@ -18,7 +18,7 @@ axios
       // Handle likes
       const handleLike = () => {
         // Make a POST request to your like API
-        axios.post("http://localhost:4600/like", {
+        axios.post("http://localhost:4600/like/addlike", {
           UserID: userID,
           PostID: postID,
         })

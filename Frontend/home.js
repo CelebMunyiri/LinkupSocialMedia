@@ -1,352 +1,423 @@
-"use strict"
-const home=document.querySelector('.home')
-const Home=document.querySelector('.Home')
-const postDiv=document.querySelector('.PostingDiv')
+"use strict";
+const home = document.querySelector(".home");
+const Home = document.querySelector(".Home");
+const postDiv = document.querySelector(".PostingDiv");
+const commentText = document.querySelector(".commentText");
 
-home.addEventListener('click',()=>{
-    Home.style.display='block'
-    Explore.style.display='none'
-    messagePeople.style.display='none'
-    Messages.style.display='none'
-    Notification.style.display='none'
-    postDiv.style.display='none'
-    profileContent.style.display='none'
-})
-
-const explore=document.querySelector('.explore')
-const Explore=document.querySelector('.Explore')
-explore.addEventListener('click',()=>{
-    Explore.style.display='block'
-    Home.style.display='none'
-    messagePeople.style.display='none'
-    Messages.style.display='none'
-    Notification.style.display='none'
-    postDiv.style.display='none'
-    profileContent.style.display='none'
-})
-
-const notification=document.querySelector('.notification')
-const Notification=document.querySelector('.Notification')
-
-notification.addEventListener('click',()=>{
-    Notification.style.display='block'
-    Home.style.display='none'
-    Explore.style.display='none'
-    messagePeople.style.display='none'
-    Messages.style.display='none'
-    postDiv.style.display='none'
-    profileContent.style.display='none'
-})
-
-const Messages=document.querySelector('.Messages')
-const messagingBtn=document.querySelector('.messages')
-const messagePeople=document.querySelector('.DisplayMessaging')
-const messagingContainer=document.querySelectorAll('.messagePerson')
-
-messagingBtn.addEventListener('click',()=>{
-    messagePeople.style.display='block'
-    Explore.style.display='none'
-    Home.style.display='none'
-    Notification.style.display='none'
-    Messages.style.display='none'
-    postDiv.style.display='none'
-    profileContent.style.display='none'
-})
-
-messagingContainer.forEach(element => {
-    element.addEventListener('click',()=>{
-        Messages.style.display='block'
-        messagePeople.style.display='none'
-        
-    })
+home.addEventListener("click", () => {
+  Home.style.display = "block";
+  Explore.style.display = "none";
+  messagePeople.style.display = "none";
+  Messages.style.display = "none";
+  Notification.style.display = "none";
+  postDiv.style.display = "none";
+  profileContent.style.display = "none";
 });
 
-const BacktoMessages=document.querySelector('.backMessages')
+const explore = document.querySelector(".explore");
+const Explore = document.querySelector(".Explore");
+explore.addEventListener("click", () => {
+  Explore.style.display = "block";
+  Home.style.display = "none";
+  messagePeople.style.display = "none";
+  Messages.style.display = "none";
+  Notification.style.display = "none";
+  postDiv.style.display = "none";
+  profileContent.style.display = "none";
+});
 
-BacktoMessages.addEventListener('click',()=>{
-    messagePeople.style.display='block'
-    Explore.style.display='none'
-    Home.style.display='none'
-    Notification.style.display='none'
-    Messages.style.display='none'
-    postDiv.style.display='none'
+const notification = document.querySelector(".notification");
+const Notification = document.querySelector(".Notification");
 
-})
+notification.addEventListener("click", () => {
+  Notification.style.display = "block";
+  Home.style.display = "none";
+  Explore.style.display = "none";
+  messagePeople.style.display = "none";
+  Messages.style.display = "none";
+  postDiv.style.display = "none";
+  profileContent.style.display = "none";
+});
 
-const backToHome=document.querySelectorAll('.backHome')
+const Messages = document.querySelector(".Messages");
+const messagingBtn = document.querySelector(".messages");
+const messagePeople = document.querySelector(".DisplayMessaging");
+const messagingContainer = document.querySelectorAll(".messagePerson");
 
-backToHome.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-    messagePeople.style.display='none'
-    Explore.style.display='none'
-    Home.style.display='block'
-    Notification.style.display='none'
-    Messages.style.display='none'
-    profileContent.style.display='none'
-    postDiv.style.display='none'
-})
-})
+messagingBtn.addEventListener("click", () => {
+  messagePeople.style.display = "block";
+  Explore.style.display = "none";
+  Home.style.display = "none";
+  Notification.style.display = "none";
+  Messages.style.display = "none";
+  postDiv.style.display = "none";
+  profileContent.style.display = "none";
+});
 
-const PostingDiv=document.querySelector('.PostingDiv')
-const closePost=document.querySelector('.closePost')
+messagingContainer.forEach((element) => {
+  element.addEventListener("click", () => {
+    Messages.style.display = "block";
+    messagePeople.style.display = "none";
+  });
+});
 
-closePost.addEventListener('click',()=>{
-PostingDiv.style.display='none'
-Home.style.display='block'
-})
+const BacktoMessages = document.querySelector(".backMessages");
 
-const postButton=document.querySelector('.post')
+BacktoMessages.addEventListener("click", () => {
+  messagePeople.style.display = "block";
+  Explore.style.display = "none";
+  Home.style.display = "none";
+  Notification.style.display = "none";
+  Messages.style.display = "none";
+  postDiv.style.display = "none";
+});
 
-postButton.addEventListener('click',()=>{
-    PostingDiv.style.display='block'
-    messagePeople.style.display='none'
-    Explore.style.display='none'
-    Home.style.display='none'
-    Notification.style.display='none'
-    Messages.style.display='none'
-})
+const backToHome = document.querySelectorAll(".backHome");
 
-const profileButton=document.querySelectorAll('.profile')
-const profileContent=document.querySelector('.profileContent')
+backToHome.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    messagePeople.style.display = "none";
+    Explore.style.display = "none";
+    Home.style.display = "block";
+    Notification.style.display = "none";
+    Messages.style.display = "none";
+    profileContent.style.display = "none";
+    postDiv.style.display = "none";
+  });
+});
 
-profileButton.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-    profileContent.style.display='block'
-    PostingDiv.style.display='none'
-    messagePeople.style.display='none'
-    Explore.style.display='none'
-    Home.style.display='none'
-    Notification.style.display='none'
-    Messages.style.display='none'
-    postDiv.style.display='none'
-    })
-})
+const PostingDiv = document.querySelector(".PostingDiv");
+const closePost = document.querySelector(".closePost");
+
+closePost.addEventListener("click", () => {
+  PostingDiv.style.display = "none";
+  Home.style.display = "block";
+});
+
+const postButton = document.querySelector(".post");
+
+postButton.addEventListener("click", () => {
+  PostingDiv.style.display = "block";
+  messagePeople.style.display = "none";
+  Explore.style.display = "none";
+  Home.style.display = "none";
+  Notification.style.display = "none";
+  Messages.style.display = "none";
+});
+
+const profileButton = document.querySelectorAll(".profile");
+const profileContent = document.querySelector(".profileContent");
+
+profileButton.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    profileContent.style.display = "block";
+    PostingDiv.style.display = "none";
+    messagePeople.style.display = "none";
+    Explore.style.display = "none";
+    Home.style.display = "none";
+    Notification.style.display = "none";
+    Messages.style.display = "none";
+    postDiv.style.display = "none";
+  });
+});
 
 //posting implementation starts here
 const postText = document.getElementById("post-text");
 const postImage = document.getElementById("post-image");
 const postVideo = document.getElementById("post-video");
-const postForm=document.getElementById("post-form")
+const postForm = document.getElementById("post-form");
 const postingButton = document.getElementById("post-button");
 
-let imageToPost=''
+let imageToPost = "";
 
-postImage.addEventListener('change', (event)=>{
-        
-    const target = event.target
-    const files = target.files
-    if(files){
-        const formData = new FormData()
-        formData.append("file", files[0])
-        formData.append("upload_preset", "Notebook")
-        formData.append("cloud_name", "dkgtf3hhj")
+postImage.addEventListener("change", (event) => {
+  const target = event.target;
+  const files = target.files;
+  if (files) {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "Notebook");
+    formData.append("cloud_name", "dkgtf3hhj");
 
-        fetch('https://api.cloudinary.com/v1_1/dkgtf3hhj/image/upload', {
-            method: "POST",
-            body: formData
-        }).then((res) => res.json()).then(res => imageToPost = res.url)
-    }
-})
-
-let videoToPost=''
-
-postVideo.addEventListener('change', (event)=>{
-        
-    const target = event.target
-    const files = target.files
-    if(files){
-        const formData = new FormData()
-        formData.append("file", files[0])
-        formData.append("upload_preset", "Notebook")
-        formData.append("cloud_name", "dkgtf3hhj")
-
-        fetch('https://api.cloudinary.com/v1_1/dkgtf3hhj/video/upload', {
-            method: "POST",
-            body: formData
-        }).then((res) => res.json()).then(res =>{
-            console.log(res)
-             videoToPost = res.url
-             localStorage.setItem('videoUrl',videoToPost) })
-             
-    }
-})
-
-postForm.addEventListener('submit',(e)=>{
-e.preventDefault()
-
-axios
-.post(
-  "http://localhost:4600/postActions/createPost",
-  
-  {
-    PostContent: postText.value,
-    ImageUrl:imageToPost,
-    VideoUrl:videoToPost,
-    UserID:localStorage.getItem('UserID')
-
-  },
-
-  {
-    headers: {
-      Accept: "application/json",
-      "Content-type": "application/json",
-      "token":localStorage.getItem('tokenToUse')
-    },
+    fetch("https://api.cloudinary.com/v1_1/dkgtf3hhj/image/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => (imageToPost = res.url));
   }
-)
-.then((response) => {
-  console.log(response.data);
-  
-  location.reload()
-})
-.catch((e) => {
-  console.log(e);
 });
 
+let videoToPost = "";
+
+postVideo.addEventListener("change", (event) => {
+  const target = event.target;
+  const files = target.files;
+  if (files) {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "Notebook");
+    formData.append("cloud_name", "dkgtf3hhj");
+
+    fetch("https://api.cloudinary.com/v1_1/dkgtf3hhj/video/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        videoToPost = res.url;
+        localStorage.setItem("videoUrl", videoToPost);
+      });
+  }
+});
+
+postForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  axios
+    .post(
+      "http://localhost:4600/postActions/createPost",
+
+      {
+        PostContent: postText.value,
+        ImageUrl: imageToPost,
+        VideoUrl: videoToPost,
+        UserID: localStorage.getItem("UserID"),
+      },
+
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+          token: localStorage.getItem("tokenToUse"),
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+
+      location.reload();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
+
+
+//displaying the posts here
+const postsArea = document.querySelector(".lower-posts");
+
+postsArea.addEventListener("click", (e) => {
+  e.preventDefault();
+  
+  if(e.target.classList.contains("commentText")){
+    
+    
+  }
 })
 
-let likesNo=0
-//displaying the posts here
-const postsArea=document.querySelector('.lower-posts')
-
-
 axios
-.get(
-  "http://localhost:4600/postActions/viewAllPosts",
-  {
+  .get("http://localhost:4600/postActions/viewAllPosts", {
     headers: {
-     "token":localStorage.getItem('tokenToUse')
+      token: localStorage.getItem("tokenToUse"),
     },
-  }
-)
-.then((response) => {
+  })
+  .then((response) => {
+    //console.log(response.data);
+    let Posts = response.data.result;
 
-  //console.log(response.data);
-let Posts=response.data.result
+    let array1 = Posts[0];
 
-let array1=Posts[0]
+    let array2 = Posts[1];
 
-let array2=Posts[1]
+    const combinedArray = array1.map((item, index) => ({
+      ...item,
+      ...array2[index],
+    }));
+   // console.log(combinedArray);
 
-const combinedArray=array1.map((item, index)=>({
-    ...item,...array2[index],
-}))
-console.log(combinedArray)
+    let html = "";
+    combinedArray.forEach((post) => {
+     
+      const commentInputId = `commentInput-${post.PostID}`
+      const commentIconId = `commentIcon-${post.PostID}`;
+      const commentsContainerId = `commentsContainer-${post.PostID}`;
 
-
-let html=''
-combinedArray.forEach((post) => {
-   // const PostID=post.PostID
-   // const UserID=localStorage.getItem('UserID')
-
-    //like
-    
-    
-   
-     html+=`
+      html += `
      <div class="post-body">
      <div class="post-head">
-         <img src="chacha.jpg" alt="">
+         <img src=${post.Profile} alt="">
          <h6>${post.Username}</h6>
          <p>${post.Email}</p>
      </div>
      <div class="post-content">
          <div class="content-part">
              <p>${post.PostContent}</p>
-             <img src=${post.ImageUrl} alt="">
+             <img class="postImg" src=${post.ImageUrl} alt="">
          </div>
          <div class="reactionPart">
              <div class="reaction">
-                 <iconify-icon class="comment" icon="iconamoon:comment-light" style="color: black;"></iconify-icon>
+                 <iconify-icon id="${commentIconId}" onclick=comentView(${post.PostID,'${commentsContainerId}'}) class="commenti" icon="iconamoon:comment-light" style="color: black; cursor:pointer"></iconify-icon>
                  <p>34</p>
              </div>
              <div class="reaction">
-                 <iconify-icon class="repost" icon="system-uicons:retweet" style="color: black;"></iconify-icon>
+                 <iconify-icon class="repost"  icon="system-uicons:retweet" style="color: black; "></iconify-icon>
                  <p>45</p>
              </div>
              <div class="reaction">
                  <iconify-icon class="like" onclick=likePost(${post.PostID}) icon="fluent-mdl2:like" style="color: black;"></iconify-icon>
                  <iconify-icon class="unlike"  icon="iconamoon:like-fill" style="color: blue;"></iconify-icon>
-                 <p>${likesNo}</p>
+                 <p>${showLikes(post.PostID)}</p>
              </div>
-             
-
          </div>
+         <div class="commentSection" style="display:block">
+             <input type="text" class="commentText" id="${commentInputId}" placeholder="comment here">
+             <button type="submit" onclick=addComment(${post.PostID},'${commentInputId}')>send</button>
+             </div>
+             <div id="${commentsContainerId}" class="comments-container" style="display: none;">
+             
      </div>
+     </div>
+     
+     
  </div>
  
  </div>`;
- postsArea.innerHTML=html
 
-  const like=document.querySelector('.like')
-
-//   like.addEventListener('click',async(e)=>{
-//     e.preventDefault()
-//     const iD=post.PostID
-//      const res=await likePost(iD)
-   
-//   })
+//console.log(commentIconId)
+      const postImg = document.querySelector(".postImg");
+      //  if(postImg.src=null){
+      //   postImg.style.display='none'
+      //  }////
+      postsArea.innerHTML = html;
+    
  
-   })
-   
+    });
+  })
+  .catch((e) => {
+   console.log(e);
+  });
   
- })
-  
-.catch((e) => {
-  console.log(e);
-});
 
 //like a post
-
-function likePost(id){
-    axios
+const like = document.querySelector(".like");
+function likePost(id) {
+  axios
     .post(
       "http://localhost:4600/like/addlike",
-      
+
       {
-        PostID:id,
-        UserID:localStorage.getItem('UserID')
-    
+        PostID: id,
+        UserID: localStorage.getItem("UserID"),
       },
-    
+
       {
         headers: {
           Accept: "application/json",
           "Content-type": "application/json",
-          "token":localStorage.getItem('tokenToUse')
+          token: localStorage.getItem("tokenToUse"),
         },
       }
     )
     .then((response) => {
       console.log(response.data);
-      
-    
+      console.log(id);
     })
     .catch((e) => {
       console.log(e);
     });
 }
-const unlike=document.querySelector('.unlike')
-
-
+const unlike = document.querySelector(".unlike");
 
 //show likes
-function showLikes(iD){
-    
-    axios
-    .get(
-      `http://localhost:4600/like/likesOfOne/${iD}`,
+function showLikes(iD) {
+  axios
+    .get(`http://localhost:4600/like/likesOfOne/${iD}`, {
+      headers: {
+        token: localStorage.getItem("tokenToUse"),
+      },
+    })
+    .then((res) => {
+      const noOfLikes = res.data.result.length;
+    });
+}
+///
+//const commentIcon = document.getElementById(commentIconId);
+      function comentView(PostID,commentsContainerId){
+       // const commentsContainer = document.getElementById(commentsContainerId);
+
+alert('hello')
+
+        // Toggle the display of comments
+        if (commentsContainerId.style.display === 'none' || commentsContainerId.style.display === '') {
+          commentsContainerId.style.display = 'block';
+          // Fetch and display comments for this post
+          fetchAndDisplayComments(PostID, commentsContainerId);
+        } else {
+          commentsContainerId.style.display = 'none';
+        }
+      };
+//
+function addComment(iD,commentInputId) {
+  
+  const commentedText=document.getElementById(commentInputId).value
+
+  if(commentedText.trim() !==""){
+  axios
+    .post(
+      "http://localhost:4600/commentActions/createComment",
+
+      {
+        PostID: iD,
+        CommentText: commentedText,
+        UserID: localStorage.getItem("UserID"),
+      },
+
       {
         headers: {
-         "token":localStorage.getItem('tokenToUse')
+          Accept: "application/json",
+          "Content-type": "application/json",
+          token: localStorage.getItem("tokenToUse"),
         },
       }
     )
-    .then((res) => {
-        const noOfLikes=res.data.result.length
-        likesNo=noOfLikes
-        
+    .then((response) => {
+      console.log(response.data);
+      console.log(iD);
+      
+    // location.reload();
     })
+    .catch((e) => {
+      console.log(e);
+    });
+  } else{
+    alert("Enter a valid comment")
+  }
 }
+
+//
+function fetchAndDisplayComments(postID, commentsContainer) {
+  // Make a GET request to your comments API for this postID
+  axios.get(`http://localhost:4600/commentActions/commentsOfOnes/${postID}`)
+    .then((response) => {
+      const comments = response.data.result;
+console.log(comments)
+      // Generate HTML for comments and add them to the comments container
+      let commentsHTML = '';
+      if(comments.length !==0){
+      comments.forEach((comment) => {
+        commentsHTML += `<div class="comment-item">${comment.CommentText}</div>`;
+      });
+      commentsContainer.innerHTML = commentsHTML;
+    }
+    })
+    .catch((error) => {
+      console.error(`Error fetching comments for post ${postID}:`, error);
+    });
+}
+
+
+
 
 
