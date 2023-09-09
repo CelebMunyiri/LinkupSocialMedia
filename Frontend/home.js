@@ -208,14 +208,10 @@ postForm.addEventListener("submit", (e) => {
 //displaying the posts here
 const postsArea = document.querySelector(".lower-posts");
 
-postsArea.addEventListener("click", (e) => {
-  e.preventDefault();
-  
-  if(e.target.classList.contains("commentText")){
-    
-    
-  }
-})
+const postsDisplayer=document.querySelector('.postDisplayer')
+
+
+
 
 axios
   .get("http://localhost:4600/postActions/viewAllPosts", {
@@ -243,13 +239,17 @@ axios
       const commentInputId = `commentInput-${post.PostID}`
       const commentIconId = `commentIcon-${post.PostID}`;
       const commentsContainerId = `commentsContainer-${post.PostID}`;
+      const likesCountElement = `likesCount-${post.PostID}`;
+      const commentCount=`commentCount-${post.PostID}`
+     showLikes(post.PostID)
+     
 
       html += `
      <div class="post-body">
      <div class="post-head">
          <img src=${post.Profile} alt="">
-         <h6>${post.Username}</h6>
-         <p>${post.Email}</p>
+         <h4>${post.Username}</h4>
+         <p class="mail">${post.Email}</p>
      </div>
      <div class="post-content">
          <div class="content-part">
@@ -258,8 +258,8 @@ axios
          </div>
          <div class="reactionPart">
              <div class="reaction">
-                 <iconify-icon id="${commentIconId}" onclick=comentView(${post.PostID,'${commentsContainerId}'}) class="commenti" icon="iconamoon:comment-light" style="color: black; cursor:pointer"></iconify-icon>
-                 <p>34</p>
+                 <iconify-icon id="${commentIconId}" onclick=fetchAndDisplayComments(${post.PostID},'${commentsContainerId}') class="commenti" icon="iconamoon:comment-light" style="color: black; cursor:pointer"></iconify-icon>
+                 <p id="${commentCount}"></p>
              </div>
              <div class="reaction">
                  <iconify-icon class="repost"  icon="system-uicons:retweet" style="color: black; "></iconify-icon>
@@ -268,7 +268,7 @@ axios
              <div class="reaction">
                  <iconify-icon class="like" onclick=likePost(${post.PostID}) icon="fluent-mdl2:like" style="color: black;"></iconify-icon>
                  <iconify-icon class="unlike"  icon="iconamoon:like-fill" style="color: blue;"></iconify-icon>
-                 <p>${showLikes(post.PostID)}</p>
+                 <p id="${likesCountElement}"></p>
              </div>
          </div>
          <div class="commentSection" style="display:block">
@@ -285,11 +285,9 @@ axios
  
  </div>`;
 
-//console.log(commentIconId)
+
       const postImg = document.querySelector(".postImg");
-      //  if(postImg.src=null){
-      //   postImg.style.display='none'
-      //  }////
+ 
       postsArea.innerHTML = html;
     
  
@@ -298,7 +296,7 @@ axios
   .catch((e) => {
    console.log(e);
   });
-  
+ 
 
 //like a post
 const like = document.querySelector(".like");
@@ -340,25 +338,16 @@ function showLikes(iD) {
     })
     .then((res) => {
       const noOfLikes = res.data.result.length;
+      const likesCountElement = document.getElementById(`likesCount-${iD}`);
+      if (likesCountElement) {
+          likesCountElement.textContent = noOfLikes;
+      }
     });
 }
-///
-//const commentIcon = document.getElementById(commentIconId);
-      function comentView(PostID,commentsContainerId){
-       // const commentsContainer = document.getElementById(commentsContainerId);
 
-alert('hello')
-
-        // Toggle the display of comments
-        if (commentsContainerId.style.display === 'none' || commentsContainerId.style.display === '') {
-          commentsContainerId.style.display = 'block';
-          // Fetch and display comments for this post
-          fetchAndDisplayComments(PostID, commentsContainerId);
-        } else {
-          commentsContainerId.style.display = 'none';
-        }
-      };
-//
+showLikes(3002)
+//function for adding comment
+     
 function addComment(iD,commentInputId) {
   
   const commentedText=document.getElementById(commentInputId).value
@@ -384,9 +373,7 @@ function addComment(iD,commentInputId) {
     )
     .then((response) => {
       console.log(response.data);
-      console.log(iD);
-      
-    // location.reload();
+      commentedText=''
     })
     .catch((e) => {
       console.log(e);
@@ -399,25 +386,76 @@ function addComment(iD,commentInputId) {
 //
 function fetchAndDisplayComments(postID, commentsContainer) {
   // Make a GET request to your comments API for this postID
-  axios.get(`http://localhost:4600/commentActions/commentsOfOnes/${postID}`)
+  
+  axios.get(`http://localhost:4600/commentActions/commentsOfOne/${postID}`)
     .then((response) => {
-      const comments = response.data.result;
+      const comments = response.data.result[0];
+      
 console.log(comments)
-      // Generate HTML for comments and add them to the comments container
-      let commentsHTML = '';
-      if(comments.length !==0){
-      comments.forEach((comment) => {
-        commentsHTML += `<div class="comment-item">${comment.CommentText}</div>`;
-      });
-      commentsContainer.innerHTML = commentsHTML;
-    }
+console.log(commentsContainer)
+      // Generating HTML for comments and adding them to the comments container
+      let commentsContainered=document.getElementById(`${commentsContainer}`)
+      if(commentsContainered.style.display==='none'){
+        commentsContainered.style.display='block'
+        let commentsHTML = '';
+      
+        comments.forEach((comment) => {
+          commentsHTML += `
+          <div class="comentBody">
+          <div class="comentHead">
+          <img src=${comment.UserProfile} alt="">
+          <h4>${comment.Username}</h4>
+          <p class="mail">${comment.Email}</p>
+          </div>
+          <p>${comment.CommentText}</p>
+          <iconify-icon icon="iconamoon:comment-light" style="color: black;"></iconify-icon>
+          <input type="text" class="subComment" placeholder=" add subcomment here">
+          <button type="submit">send</button>
+          </div> `;
+          
+          commentsContainered.innerHTML = commentsHTML;
+        })
+      } else{
+        commentsContainered.style.display='none'
+      }
+    
     })
-    .catch((error) => {
-      console.error(`Error fetching comments for post ${postID}:`, error);
-    });
+    
 }
 
+//handle follow and unfollow
+const showUser=document.querySelector('.showUsers')
+const followersArea=document.querySelector('.followArea')
 
+showUser.addEventListener('click',()=>{
+  postsArea.innerHTML=''
+
+  
+
+  axios.get(`http://localhost:4600/user/allUsers`,
+  ).then((res)=>{
+    const users=res.data.result[0]
+    
+    let userHtml=''
+    users.forEach((user)=>{
+      let followID=`follow-${user.UserID}`
+      let unfollowID=`unfollow-${user.UserID}`
+userHtml+=`
+<img src=${user.userProfile} alt="">
+<h4>${user.Username}</h4>
+<button id='${followID}'>follow</button>
+<button id='${unfollowID}' style="display:none">unfollow</button>`
+postsArea.innerHTML=userHtml
+
+const followBtn=document.getElementById(followID)
+const unfollowBtn=document.getElementById(unfollowID)
+followBtn.addEventListener('click',()=>{
+unfollowBtn.style.display='block'
+})
+    })
+  })
+  
+})
 
 
 

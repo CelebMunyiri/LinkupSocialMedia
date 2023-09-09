@@ -76,8 +76,23 @@ const updateUserBio=async(req,res)=>{
     }
 }
 
+const viewAllUsers=async(req,res)=>{
+   try {
+    const pool=await mssql.connect(sqlConfig)
+    const result=(await pool.request()
+    .execute('displayAllUsers')).recordsets
+    if(result){
+        return res.status(200).json({result})
+    } else{
+        return res.status(401).json({message:"Error fetching users"})
+    }
+   } catch (error) {
+    return res.status(402).json({Error:error.message})
+   }
+}
+
 
 
 module.exports={
-    registerUser,loginUser,updateUserBio
+    registerUser,loginUser,updateUserBio,viewAllUsers
 }

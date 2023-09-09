@@ -30,6 +30,10 @@ Content-Type: application/json
     "UserBackgroundImage":"https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/33/505623/1.jpg"
 }
 
+###get All users
+GET http://localhost:4600/user/allUsers
+Content-Type: application/json
+
 
 ###follow actions
 ###follow
@@ -72,13 +76,13 @@ Content-Type: application/json
 
 
 ###Delete Post
-DELETE http://localhost:4600/postActions/deletePost/1
+DELETE http://localhost:4600/postActions/deletePost/2012
 
 
 ###view all posts
 GET http://localhost:4600/postActions/viewAllPosts
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImRhd3VkIiwiRW1haWwiOiJkYXd1ZEBnbWFpbC5jb20iLCJDcmVhdGVkQXQiOiIyMDIzLTA5LTAzVDAwOjAwOjAwLjAwMFoiLCJpYXQiOjE2OTQxNjMwNjAsImV4cCI6MTY5NDE2NjY2MH0.JKhQ5-hwd1OCv8izNhU8UiW3sFLVK18HwjZBn09c2ws
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImRhd3VkIiwiRW1haWwiOiJkYXd1ZEBnbWFpbC5jb20iLCJDcmVhdGVkQXQiOiIyMDIzLTA5LTAzVDAwOjAwOjAwLjAwMFoiLCJpYXQiOjE2OTQyNTk0MjcsImV4cCI6MTY5NDI2MzAyN30.DtvyqLO-UuMmmXixN1OzbXj-VaBLUri0wnj2th5zHjw
 
 
 
@@ -94,7 +98,7 @@ Content-Type: application/json
 
 
 ###delete comment
-DELETE http://localhost:4600/commentActions/deleteComment/3 
+DELETE http://localhost:4600/commentActions/deleteComment/2012
 
 
 ###update comment
@@ -131,7 +135,7 @@ Content-Type: application/json
 
 
 ###Comments of one
-GET http://localhost:4600/commentActions/commentsOfOne/2013
+GET http://localhost:4600/commentActions/commentsOfOne/3002
 Content-Type: application/json
 
 ###send notification

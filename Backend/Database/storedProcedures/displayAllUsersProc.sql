@@ -1,0 +1,5 @@
+CREATE OR ALTER PROCEDURE displayAllUsers
+AS 
+BEGIN
+SELECT * FROM Users
+END;
