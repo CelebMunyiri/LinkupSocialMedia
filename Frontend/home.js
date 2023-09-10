@@ -241,7 +241,9 @@ axios
       const commentsContainerId = `commentsContainer-${post.PostID}`;
       const likesCountElement = `likesCount-${post.PostID}`;
       const commentCount=`commentCount-${post.PostID}`
+      const postImg=`img-${post.PostID}`
      showLikes(post.PostID)
+     ShowCommentsNumber(post.PostID)
      
 
       html += `
@@ -254,7 +256,7 @@ axios
      <div class="post-content">
          <div class="content-part">
              <p>${post.PostContent}</p>
-             <img class="postImg" src=${post.ImageUrl} alt="">
+             <img id="${postImg}" src=${post.ImageUrl} alt="">
          </div>
          <div class="reactionPart">
              <div class="reaction">
@@ -262,8 +264,7 @@ axios
                  <p id="${commentCount}"></p>
              </div>
              <div class="reaction">
-                 <iconify-icon class="repost"  icon="system-uicons:retweet" style="color: black; "></iconify-icon>
-                 <p>45</p>
+
              </div>
              <div class="reaction">
                  <iconify-icon class="like" onclick=likePost(${post.PostID}) icon="fluent-mdl2:like" style="color: black;"></iconify-icon>
@@ -286,7 +287,10 @@ axios
  </div>`;
 
 
-      const postImg = document.querySelector(".postImg");
+      const postImage = document.getElementById(postImg);
+      // if(!post.ImageUrl){
+      //   postImage.style.display='none'
+      // }
  
       postsArea.innerHTML = html;
     
@@ -345,7 +349,7 @@ function showLikes(iD) {
     });
 }
 
-showLikes(3002)
+
 //function for adding comment
      
 function addComment(iD,commentInputId) {
@@ -391,7 +395,8 @@ function fetchAndDisplayComments(postID, commentsContainer) {
     .then((response) => {
       const comments = response.data.result[0];
       
-console.log(comments)
+      
+
 console.log(commentsContainer)
       // Generating HTML for comments and adding them to the comments container
       let commentsContainered=document.getElementById(`${commentsContainer}`)
@@ -423,14 +428,30 @@ console.log(commentsContainer)
     
 }
 
+//show number of comments
+function ShowCommentsNumber(postID){
+axios.get(`http://localhost:4600/commentActions/commentsOfOne/${postID}`)
+.then((response) => {
+  const comments = response.data.result[0];
+  console.log(comments.length)
+  const commentCount = document.getElementById(`commentCount-${postID}`)
+  if(commentCount){
+    commentCount.textContent=comments.length
+  }
+  
+console.log(comments)
+})
+}
 //handle follow and unfollow
 const showUser=document.querySelector('.showUsers')
-const followersArea=document.querySelector('.followArea')
+const followersArea=document.querySelector('.postDisplayer')
 
 showUser.addEventListener('click',()=>{
   postsArea.innerHTML=''
 
-  
+  followersArea.addEventListener('click',()=>{
+    location.reload()
+  })
 
   axios.get(`http://localhost:4600/user/allUsers`,
   ).then((res)=>{

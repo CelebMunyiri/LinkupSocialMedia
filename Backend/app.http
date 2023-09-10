@@ -150,4 +150,21 @@ Content-Type: application/json
 
 ###get notification
 GET http://localhost:4600/notification/get/1
+Content-Type: application/json 
+
+
+//Get Message
+
+
+###Send a message
+POST http://localhost:4600/messaging/send
 Content-Type: application/json
+
+{
+    "SenderID":"1",
+    "ReceiverID":"2",
+    "MessageContent":"Yes sir, what are you saying"
+}
+
+
+
