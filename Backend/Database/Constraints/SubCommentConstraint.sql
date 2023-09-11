@@ -1,0 +1,7 @@
+ALTER TABLE SubComments
+ADD CONSTRAINT FK_SubComments_User FOREIGN KEY (UserID)
+REFERENCES Users (UserID);
+
+ALTER TABLE Comments
+ADD CONSTRAINT FK_SubComments_Comment FOREIGN KEY (CommentID)
+REFERENCES Comments (CommentID);

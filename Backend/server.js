@@ -10,12 +10,14 @@ const { commentRouter } = require('./Routes/commentRoutes')
 const { likeRouter } = require('./Routes/likeRoutes')
 const { notificationRoute } = require('./Routes/notificationRoute')
 const { messagingRouter } = require('./Routes/messagingRoute')
+const { subCommentRoute } = require('./Routes/subCommentRoutes')
 const app=express()
 app.use(express.json())
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended:true}))
 
+app.use(express.static('public', { 'Content-Type': 'application/javascript' }));
 
 app.use(helmet())
 
@@ -28,6 +30,7 @@ app.use('/commentActions',commentRouter)
 app.use('/like',likeRouter)
 app.use('/notification',notificationRoute)
 app.use('/messaging',messagingRouter)
+app.use('/subComment',subCommentRoute)
 
 app.listen(4600,()=>{
     console.log('server Running on port 4600')

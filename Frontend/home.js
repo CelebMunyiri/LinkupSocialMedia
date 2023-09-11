@@ -128,25 +128,26 @@ const postVideo = document.getElementById("post-video");
 const postForm = document.getElementById("post-form");
 const postingButton = document.getElementById("post-button");
 
-let imageToPost = "";
+let imageToPost = '';
 
-postImage.addEventListener("change", (event) => {
-  const target = event.target;
-  const files = target.files;
-  if (files) {
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    formData.append("upload_preset", "Notebook");
-    formData.append("cloud_name", "dkgtf3hhj");
+postImage.addEventListener('change', (event)=>{
+        
+  const target = event.target
+  const files = target.files
+  console.log(files)
+  if(files){
+      const formData = new FormData()
+      formData.append("file", files[0])
+      formData.append("upload_preset", "Linkup")
+      formData.append("cloud_name", "dhbfxndxb")
 
-    fetch("https://api.cloudinary.com/v1_1/dkgtf3hhj/image/upload", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((res) => (imageToPost = res.url));
+      fetch('https://api.cloudinary.com/v1_1/dhbfxndxb/image/upload', {
+          method: "POST",
+          body: formData
+      }).then((res) => res.json()).then(res => imageToPost = res.url)
   }
-});
+})
+
 
 let videoToPost = "";
 
@@ -156,10 +157,10 @@ postVideo.addEventListener("change", (event) => {
   if (files) {
     const formData = new FormData();
     formData.append("file", files[0]);
-    formData.append("upload_preset", "Notebook");
-    formData.append("cloud_name", "dkgtf3hhj");
+    formData.append("upload_preset", "Linkup");
+    formData.append("cloud_name", "dhbfxndxb");
 
-    fetch("https://api.cloudinary.com/v1_1/dkgtf3hhj/video/upload", {
+    fetch("https://api.cloudinary.com/v1_1/dhbfxndxb/video/upload", {
       method: "POST",
       body: formData,
     })
@@ -171,7 +172,7 @@ postVideo.addEventListener("change", (event) => {
       });
   }
 });
-
+console.log(imageToPost)
 postForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -182,7 +183,7 @@ postForm.addEventListener("submit", (e) => {
       {
         PostContent: postText.value,
         ImageUrl: imageToPost,
-        VideoUrl: videoToPost,
+        VideoUrl:videoToPost,
         UserID: localStorage.getItem("UserID"),
       },
 
@@ -389,22 +390,21 @@ function addComment(iD,commentInputId) {
 
 //
 function fetchAndDisplayComments(postID, commentsContainer) {
-  // Make a GET request to your comments API for this postID
+  
   
   axios.get(`http://localhost:4600/commentActions/commentsOfOne/${postID}`)
     .then((response) => {
       const comments = response.data.result[0];
       
-      
-
-console.log(commentsContainer)
-      // Generating HTML for comments and adding them to the comments container
       let commentsContainered=document.getElementById(`${commentsContainer}`)
       if(commentsContainered.style.display==='none'){
         commentsContainered.style.display='block'
         let commentsHTML = '';
       
         comments.forEach((comment) => {
+          const subCommentId=`subCommentDiv-${comment.CommentID}`
+          const subCommentValue=`SubCommentValue-${comment.CommentID}`
+          
           commentsHTML += `
           <div class="comentBody">
           <div class="comentHead">
@@ -413,9 +413,10 @@ console.log(commentsContainer)
           <p class="mail">${comment.Email}</p>
           </div>
           <p>${comment.CommentText}</p>
-          <iconify-icon icon="iconamoon:comment-light" style="color: black;"></iconify-icon>
-          <input type="text" class="subComment" placeholder=" add subcomment here">
-          <button type="submit">send</button>
+          <iconify-icon onclick=displaySubComments(${comment.CommentID},'${subCommentId}') icon="iconamoon:comment-light" style="color: black;"></iconify-icon>
+          <input type="text" id="${subCommentValue}" class="subComment" placeholder=" add subcomment here">
+          <button type="submit" onclick=addSubComment(${comment.CommentID},'${subCommentValue}')>send</button>
+          <div id="${subCommentId}" class="SubComments"></div>
           </div> `;
           
           commentsContainered.innerHTML = commentsHTML;
@@ -433,7 +434,7 @@ function ShowCommentsNumber(postID){
 axios.get(`http://localhost:4600/commentActions/commentsOfOne/${postID}`)
 .then((response) => {
   const comments = response.data.result[0];
-  console.log(comments.length)
+  //console.log(comments.length)
   const commentCount = document.getElementById(`commentCount-${postID}`)
   if(commentCount){
     commentCount.textContent=comments.length
@@ -446,12 +447,12 @@ console.log(comments)
 const showUser=document.querySelector('.showUsers')
 const followersArea=document.querySelector('.postDisplayer')
 
+followersArea.addEventListener('click',()=>{
+  location.reload()
+})
+
 showUser.addEventListener('click',()=>{
   postsArea.innerHTML=''
-
-  followersArea.addEventListener('click',()=>{
-    location.reload()
-  })
 
   axios.get(`http://localhost:4600/user/allUsers`,
   ).then((res)=>{
@@ -461,6 +462,7 @@ showUser.addEventListener('click',()=>{
     users.forEach((user)=>{
       let followID=`follow-${user.UserID}`
       let unfollowID=`unfollow-${user.UserID}`
+      
 userHtml+=`
 <img src=${user.userProfile} alt="">
 <h4>${user.Username}</h4>
@@ -468,15 +470,110 @@ userHtml+=`
 <button id='${unfollowID}' style="display:none">unfollow</button>`
 postsArea.innerHTML=userHtml
 
-const followBtn=document.getElementById(followID)
-const unfollowBtn=document.getElementById(unfollowID)
-followBtn.addEventListener('click',()=>{
-unfollowBtn.style.display='block'
-})
     })
   })
   
 })
+//handle following a user
+function followUser(followeeId,unfollowId,followId){
+const unfollowBtn=document.getElementById(unfollowId)
+followId=document.getElementById(followId)
+unfollowBtn.style.display='block'
+
+  axios
+  .post(
+    "http://localhost:4600/followActions/follow",
+
+    {
+      UserID:localStorage.getItem('UserID'),
+      FollowerUserID:followeeId
+  },
+
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json"
+      },
+    }
+  )
+  .then((response) => {
+    console.log(response.data);
+  
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+
+}
+
+//adding subComments
+function addSubComment(comentId,subCommentValue){
+  const subCommentContent=document.getElementById(subCommentValue).value
+  axios
+    .post(
+      "http://localhost:4600/subComment/addSubComment",
+
+      {
+        CommentID: comentId,
+        UserID: localStorage.getItem('UserID'),
+        SubCommentContent: subCommentContent,
+      },
+
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json"
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+    
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+}
+
+//Display Subcomments
+function displaySubComments(commentId,subCommentId){
+
+axios.get(`http://localhost:4600/subComment/viewAllSubComments/${commentId}`)
+.then((response) => {
+  const comments = response.data.result[0];
+  
+  
+  let subCommentContainer=document.getElementById(subCommentId)
+  if(subCommentContainer.style.display==='none'){
+    subCommentContainer.style.display='block'
+    let SubcommentsHTML = '';
+  
+    comments.forEach((comment) => {
+     
+      
+      SubcommentsHTML += `
+      <div class="comentBody">
+      <div class="comentHead">
+      <img src=${comment.SubCommentProfileImage} alt="">
+      <h4>${comment.SubCommentUsername}</h4>
+      <p class="mail">${comment.SubCommentEmail}</p>
+      </div>
+      <p>${comment.SubCommentContent}</p>
+    
+      </div> `;
+      
+      subCommentContainer.innerHTML = SubcommentsHTML;
+    })
+  } else{
+    subCommentContainer.style.display='none'
+  }
+
+})
+
+
+}
+
 
 
 

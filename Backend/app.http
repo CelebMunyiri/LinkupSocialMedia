@@ -82,8 +82,7 @@ DELETE http://localhost:4600/postActions/deletePost/2012
 ###view all posts
 GET http://localhost:4600/postActions/viewAllPosts
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImRhd3VkIiwiRW1haWwiOiJkYXd1ZEBnbWFpbC5jb20iLCJDcmVhdGVkQXQiOiIyMDIzLTA5LTAzVDAwOjAwOjAwLjAwMFoiLCJpYXQiOjE2OTQyNTk0MjcsImV4cCI6MTY5NDI2MzAyN30.DtvyqLO-UuMmmXixN1OzbXj-VaBLUri0wnj2th5zHjw
-
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImRhd3VkIiwiRW1haWwiOiJkYXd1ZEBnbWFpbC5jb20iLCJDcmVhdGVkQXQiOiIyMDIzLTA5LTAzVDAwOjAwOjAwLjAwMFoiLCJpYXQiOjE2OTQ0MTQwODgsImV4cCI6MTY5NDQxNzY4OH0.WWRwjv5_FPcpLzZahbshq4JLejZGrWIvNhCZV8cfr40
 
 
 ###create comment
@@ -167,4 +166,31 @@ Content-Type: application/json
 }
 
 
+### SubComment add subcomment
+POST http://localhost:4600/subComment/addSubComment
+Content-Type: application/json
 
+{
+    "CommentID":"1008",
+    "UserID":"1002",
+    "SubCommentContent":"Nipo single"
+}
+
+###update subComment
+PUT http://localhost:4600/subComment/update/1
+Content-Type: application/json
+
+{
+    "SubCommentContent":"Hapana"
+}
+
+
+
+###delete SubComment
+DELETE http://localhost:4600/subComment/delete/1
+Content-Type: application/json
+
+
+###view all subcomments of a comment
+GET http://localhost:4600/subComment/viewAllSubComments/1008
+Content-Type: application/json

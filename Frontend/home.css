@@ -363,6 +363,9 @@ padding: 20px;
 .hide{
     display:none;
 }
+.subComment{
+    cursor: pointer;
+}
 .comments-container{
     width: 100%;
     margin: auto;
