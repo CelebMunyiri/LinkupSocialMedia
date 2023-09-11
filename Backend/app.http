@@ -2,8 +2,8 @@ POST http://localhost:4600/user/register
 Content-Type: application/json
 
 {
-    "Username":"mwangi",
-    "Email":"davidmumyiri2019@gmail.com",
+    "Username":"Abdullahi",
+    "Email":"david.mwangi@thejitu.com",
     "PasswordHash":"12345678"
 }
 
@@ -13,7 +13,7 @@ POST http://localhost:4600/user/login
 Content-Type: application/json
 
 {
-    "Email":"dawud@gmail.com",
+    "Email":"david.mwangi@thejitu.com",
     "PasswordHash":"12345678"
 }
 
@@ -160,10 +160,15 @@ POST http://localhost:4600/messaging/send
 Content-Type: application/json
 
 {
-    "SenderID":"1",
-    "ReceiverID":"2",
-    "MessageContent":"Yes sir, what are you saying"
+    "SenderID":"2",
+    "ReceiverID":"1",
+    "MessageContent":"Hello Bro"
 }
+
+
+###Receive message
+GET http://localhost:4600/messaging/receive/1/2
+Content-Type: application/json
 
 
 ### SubComment add subcomment
@@ -209,7 +214,7 @@ Content-Type: application/json
 
 
 ###reseting Password using token
-POST http://localhost:4600/reset/reset-password/400A61
+POST http://localhost:4600/reset/reset-password/1874A0
 Content-Type: application/json 
 
 {

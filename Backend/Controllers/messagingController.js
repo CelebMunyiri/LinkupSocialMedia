@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
         io.to(`room:${senderID}-${receiverID}`).emit('isTyping', senderID);
     });
 
-    // Disconnect event
+    
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
     });
