@@ -3,11 +3,18 @@ const { sqlConfig } = require('../Config/config')
 const bcrypt=require('bcrypt')
 const dotenv=require('dotenv')
 const jwt=require('jsonwebtoken')
+const { userRegisterValidator } = require('../Validators/validators')
 dotenv.config()
 
 const registerUser=async(req,res)=>{
     try {
         const {Username,Email,PasswordHash}=req.body
+
+        const {error}=userRegisterValidator.validate(req.body)
+
+        if(error){
+            res.status(422).json(error.details[0].message)
+        }
 
     const pool=await mssql.connect(sqlConfig)
 

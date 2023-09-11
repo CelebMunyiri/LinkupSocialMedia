@@ -2,8 +2,8 @@ POST http://localhost:4600/user/register
 Content-Type: application/json
 
 {
-    "Username":"mahubali",
-    "Email":"Mahubali123@gmail.com",
+    "Username":"mwangi",
+    "Email":"davidmumyiri2019@gmail.com",
     "PasswordHash":"12345678"
 }
 
@@ -194,3 +194,24 @@ Content-Type: application/json
 ###view all subcomments of a comment
 GET http://localhost:4600/subComment/viewAllSubComments/1008
 Content-Type: application/json
+
+
+
+
+###reset password request
+POST http://localhost:4600/reset/reset-password
+Content-Type: application/json 
+
+{
+   "userEmail":"davidmunyiri2019@outlook.com"
+}
+
+
+
+###reseting Password using token
+POST http://localhost:4600/reset/reset-password/400A61
+Content-Type: application/json 
+
+{
+   "newPassword":"12345678"
+}
