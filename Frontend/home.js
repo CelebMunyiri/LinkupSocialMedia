@@ -379,6 +379,7 @@ function addComment(iD,commentInputId) {
     .then((response) => {
       console.log(response.data);
       commentedText=''
+      location.reload()
     })
     .catch((e) => {
       console.log(e);
@@ -425,6 +426,7 @@ function fetchAndDisplayComments(postID, commentsContainer) {
         commentsContainered.style.display='none'
       }
     
+    
     })
     
 }
@@ -448,7 +450,7 @@ const showUser=document.querySelector('.showUsers')
 const followersArea=document.querySelector('.postDisplayer')
 
 followersArea.addEventListener('click',()=>{
-  location.reload()
+  
 })
 
 showUser.addEventListener('click',()=>{
@@ -527,7 +529,8 @@ function addSubComment(comentId,subCommentValue){
       }
     )
     .then((response) => {
-      console.log(response.data);
+     // console.log(response.data);
+     window.location.reload()
     
     })
     .catch((e) => {
@@ -571,8 +574,15 @@ axios.get(`http://localhost:4600/subComment/viewAllSubComments/${commentId}`)
 
 })
 
-
 }
+//get user details after login
+const Username=document.querySelector('.Username')
+const UserProfileImg=document.querySelector('.UserProfile')
+const UserEmail=document.querySelector('.UserEmail')
+
+UserEmail.textContent=localStorage.getItem('Email')
+Username.textContent=localStorage.getItem('Username')
+UserProfileImg.src=localStorage.getItem('UserProfile')
 
 
 

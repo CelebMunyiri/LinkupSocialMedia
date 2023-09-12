@@ -13,6 +13,8 @@ let tokenToUse=''
 let UserID=''
 let UserBio=''
 let UserProfile=''
+let Username=''
+let Email=''
 loginForm.addEventListener('submit',(e)=>{
     e.preventDefault()
 
@@ -40,6 +42,12 @@ loginForm.addEventListener('submit',(e)=>{
 
         UserProfile=res.data.UserProfile
         localStorage.setItem('UserProfile',UserProfile)
+
+        Email=res.data.Email
+        localStorage.setItem('Email',Email)
+
+        Username=res.data.Username
+        localStorage.setItem('Username',Username)
         
         resMessage.style.display="block"
         resMessage.textContent="Logged in Successfully"

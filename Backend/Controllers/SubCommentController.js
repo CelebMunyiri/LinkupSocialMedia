@@ -11,13 +11,13 @@ const createSubComment=async(req,res)=>{
         .input('CommentID',CommentID)
         .input('SubCommentContent',SubCommentContent)
         .execute('addSubComment'))
-        if(result){
+        if(result.rowsAffected==1){
             return res.status(200).json({message:"SubComment created Sucessfully"})
         } else{
-            return res.status(401).json({message:"Failed to Add SubComment"})
+            return res.status(402).json({message:"Failed to Add SubComment"})
         }
     } catch (error) {
-        return res.status(402).json({Error:error.message})
+        return res.status(500).json({Error:error.message})
     }
 }
 
@@ -31,13 +31,13 @@ const updateSubComment=async(req,res)=>{
         .input('SubCommentID',SubCommentID)
         .input('SubCommentContent',mssql.VarChar, SubCommentContent)
         .execute('updateSubComment'))
-        if(result){
-            return res.status(200).json({message:"SubCommengt updated Successfully"})
+        if(result.rowsAffected==1){
+            return res.status(200).json({message:"SubComment updated Successfully"})
         } else{
             return res.status(401).json({message:"Failed Updating SubComment"})
         }
     } catch (error) {
-        console.log(error);
+    
         return res.status(500).json({Error:error.message})
     }
 }
@@ -49,7 +49,7 @@ const deleteSubComment=async(req,res)=>{
         const result=(await pool.request()
         .input('SubCommentID',SubCommentID)
         .execute('deleteSubComment'))
-        if(result){
+        if(result.rowsAffected==1){
             return res.status(200).json({message:"SubCommentDeleted Successful"})
         } else{
             return res.status(401).json({message:"Failed Deleting SubComment"})

@@ -48,9 +48,9 @@ const loginUser=async(req,res)=>{
             const passwordComparing=await bcrypt.compare(PasswordHash,hashedPwd)
 
             if(passwordComparing){
-                const {PasswordHash,UserID,UserBio,UserProfile,UserBackgroundImage,...payload}=user
+                const {PasswordHash,UserID,UserBio,UserProfile,UserBackgroundImage,Username,...payload}=user
                 const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'3600000'})
-                return res.status(200).json({message:"Logged in Succesful",token,UserID,UserBio,UserProfile,UserBackgroundImage})
+                return res.status(200).json({message:"Logged in Succesful",token,UserID,UserBio,UserProfile,UserBackgroundImage,Email,Username})
             } else{
                 return res.status(401).json({message:"Failed to login"})
             }

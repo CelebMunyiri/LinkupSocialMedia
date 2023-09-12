@@ -9,5 +9,4 @@ CREATE TABLE Users (
     CreatedAt DATE DEFAULT GETDATE(),
 );
 
-select * from Users
 

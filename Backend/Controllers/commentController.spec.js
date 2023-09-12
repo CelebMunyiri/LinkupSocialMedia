@@ -123,7 +123,7 @@ it("Should not delete a comment when not provided with the CommentID",async()=>{
             expect(res.json).toHaveBeenCalledWith({message:"Failed to load comments"})
         })
     })
-    describe("Tests fro updating a Comment",()=>{
+    describe("Tests for updating a Comment",()=>{
         it("Should update the text of a comment when using its CommentID and the comment body", async()=>{
             const req={
                 body:{
@@ -159,8 +159,8 @@ params:{
             expect(res.json).toHaveBeenCalledWith({message:"Failed Updating Comment"})
         })
     })
-    describe("Test for viewing posts a user has liked",()=>{
-        it("Should show posts a user has liked",async()=>{
+    describe("Test for viewing coments of a user",()=>{
+        it("Should show posts a user has commented",async()=>{
             const mockResult={
                 "result": [
                   [
@@ -175,7 +175,7 @@ params:{
               }
               const req={
                 params:{
-                    UserID:1
+                    CommentID:1
                 }
               }
     
