@@ -128,26 +128,26 @@ const postVideo = document.getElementById("post-video");
 const postForm = document.getElementById("post-form");
 const postingButton = document.getElementById("post-button");
 
-let imageToPost = '';
+let imageToPost = "";
 
-postImage.addEventListener('change', (event)=>{
-        
-  const target = event.target
-  const files = target.files
-  console.log(files)
-  if(files){
-      const formData = new FormData()
-      formData.append("file", files[0])
-      formData.append("upload_preset", "Linkup")
-      formData.append("cloud_name", "dhbfxndxb")
+postImage.addEventListener("change", (event) => {
+  const target = event.target;
+  const files = target.files;
+  console.log(files);
+  if (files) {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "Linkup");
+    formData.append("cloud_name", "dhbfxndxb");
 
-      fetch('https://api.cloudinary.com/v1_1/dhbfxndxb/image/upload', {
-          method: "POST",
-          body: formData
-      }).then((res) => res.json()).then(res => imageToPost = res.url)
+    fetch("https://api.cloudinary.com/v1_1/dhbfxndxb/image/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => (imageToPost = res.url));
   }
-})
-
+});
 
 let videoToPost = "";
 
@@ -165,14 +165,10 @@ postVideo.addEventListener("change", (event) => {
       body: formData,
     })
       .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        videoToPost = res.url;
-        localStorage.setItem("videoUrl", videoToPost);
-      });
+      .then((res) => ( videoToPost = res.url ));
   }
 });
-console.log(imageToPost)
+//console.log(imageToPost);
 postForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -183,7 +179,7 @@ postForm.addEventListener("submit", (e) => {
       {
         PostContent: postText.value,
         ImageUrl: imageToPost,
-        VideoUrl:videoToPost,
+        VideoUrl: videoToPost,
         UserID: localStorage.getItem("UserID"),
       },
 
@@ -205,14 +201,11 @@ postForm.addEventListener("submit", (e) => {
     });
 });
 
-
 //displaying the posts here
 const postsArea = document.querySelector(".lower-posts");
-
-const postsDisplayer=document.querySelector('.postDisplayer')
-
-
-
+postsArea.innerHTML = "";
+Notification.style.display = "none";
+const postsDisplayer = document.querySelector(".postDisplayer");
 
 axios
   .get("http://localhost:4600/postActions/viewAllPosts", {
@@ -232,20 +225,23 @@ axios
       ...item,
       ...array2[index],
     }));
-   // console.log(combinedArray);
+    // console.log(combinedArray);
 
     let html = "";
     combinedArray.forEach((post) => {
-     
-      const commentInputId = `commentInput-${post.PostID}`
+      const commentInputId = `commentInput-${post.PostID}`;
       const commentIconId = `commentIcon-${post.PostID}`;
       const commentsContainerId = `commentsContainer-${post.PostID}`;
-      const likesCountElement = `likesCount-${post.PostID}`;
-      const commentCount=`commentCount-${post.PostID}`
-      const postImg=`img-${post.PostID}`
-     showLikes(post.PostID)
-     ShowCommentsNumber(post.PostID)
-     
+      const pID = `likesCount-${post.PostID}`;
+      const commentCount = `commentCount-${post.PostID}`;
+      const postImg = `img-${post.PostID}`;
+      const likeID = `like-${post.PostID}`;
+      const unlikeID = `unlike-${post.PostID}`;
+      showLikes(post.PostID, `${pID}`);
+      ShowCommentsNumber(post.PostID);
+      hideEmptyImage(`${postImg}`);
+
+      console.log(post.ImageUrl);
 
       html += `
      <div class="post-body">
@@ -256,9 +252,12 @@ axios
      </div>
      <div class="post-content">
          <div class="content-part">
-             <p>${post.PostContent}</p>
-             <img id="${postImg}" src=${post.ImageUrl} alt="">
-         </div>
+             <p>${post.PostContent}</p>`
+
+
+             html += (post.ImageUrl !== null ? `<img id="${postImg}" src=${post.ImageUrl} alt="">` : `<p style="padding:20px; font-size:30px; font-weight:bold;display:none">${post.PostContent[0]}</p>` ) 
+         
+         html += `</div>
          <div class="reactionPart">
              <div class="reaction">
                  <iconify-icon id="${commentIconId}" onclick=fetchAndDisplayComments(${post.PostID},'${commentsContainerId}') class="commenti" icon="iconamoon:comment-light" style="color: black; cursor:pointer"></iconify-icon>
@@ -268,9 +267,9 @@ axios
 
              </div>
              <div class="reaction">
-                 <iconify-icon class="like" onclick=likePost(${post.PostID}) icon="fluent-mdl2:like" style="color: black;"></iconify-icon>
-                 <iconify-icon class="unlike"  icon="iconamoon:like-fill" style="color: blue;"></iconify-icon>
-                 <p id="${likesCountElement}"></p>
+                 <iconify-icon class="like" id="${likeID}" onclick=likePost(${post.PostID},"${unlikeID}","${likeID}",${post.UserID}) icon="fluent-mdl2:like" style="color: black;"></iconify-icon>
+                 <iconify-icon class="unlike" id="${unlikeID}" onclick=unlikePost(${post.PostID},"${unlikeID}","${likeID}") icon="iconamoon:like-fill" style="color: blue;"></iconify-icon>
+                 <p id="${pID}"></p>
              </div>
          </div>
          <div class="commentSection" style="display:block">
@@ -281,31 +280,37 @@ axios
              
      </div>
      </div>
-     
-     
+       
  </div>
  
  </div>`;
 
-
-      const postImage = document.getElementById(postImg);
-      // if(!post.ImageUrl){
-      //   postImage.style.display='none'
-      // }
- 
       postsArea.innerHTML = html;
-    
- 
     });
   })
   .catch((e) => {
-   console.log(e);
+    console.log(e);
   });
- 
+//hide empty images for posts with empty images
+function hideEmptyImage(imageId) {
+  const checkimage = document.getElementById(`${imageId}`);
+
+  console.log(checkimage);
+
+  if (checkimage == null || checkimage == "") {
+    // checkimage.style.display = "none";
+  } else {
+    checkimage.style.display = "block";
+  }
+}
 
 //like a post
 const like = document.querySelector(".like");
-function likePost(id) {
+function likePost(id, unlikeId, likeId, ID) {
+  const unlikeBtn = document.getElementById(unlikeId);
+  unlikeBtn.style.display = "block";
+  const likeBtn = document.getElementById(likeId);
+  likeBtn.style.display = "none";
   axios
     .post(
       "http://localhost:4600/like/addlike",
@@ -325,48 +330,23 @@ function likePost(id) {
     )
     .then((response) => {
       console.log(response.data);
-      console.log(id);
+      //console.log(id);
+      likeNotification(ID);
     })
     .catch((e) => {
       console.log(e);
     });
 }
-const unlike = document.querySelector(".unlike");
 
-//show likes
-function showLikes(iD) {
+//unlike a post
+function unlikePost(id, unlikeId, likeId) {
+  const unlikeBtn = document.getElementById(unlikeId);
+  unlikeBtn.style.display = "none";
+  const likeBtn = document.getElementById(likeId);
+  likeBtn.style.display = "block";
   axios
-    .get(`http://localhost:4600/like/likesOfOne/${iD}`, {
-      headers: {
-        token: localStorage.getItem("tokenToUse"),
-      },
-    })
-    .then((res) => {
-      const noOfLikes = res.data.result.length;
-      const likesCountElement = document.getElementById(`likesCount-${iD}`);
-      if (likesCountElement) {
-          likesCountElement.textContent = noOfLikes;
-      }
-    });
-}
-
-
-//function for adding comment
-     
-function addComment(iD,commentInputId) {
-  
-  const commentedText=document.getElementById(commentInputId).value
-
-  if(commentedText.trim() !==""){
-  axios
-    .post(
-      "http://localhost:4600/commentActions/createComment",
-
-      {
-        PostID: iD,
-        CommentText: commentedText,
-        UserID: localStorage.getItem("UserID"),
-      },
+    .delete(
+      `http://localhost:4600/like/unlike/${id}`,
 
       {
         headers: {
@@ -378,34 +358,86 @@ function addComment(iD,commentInputId) {
     )
     .then((response) => {
       console.log(response.data);
-      commentedText=''
-      location.reload()
+      //console.log(id);
     })
     .catch((e) => {
       console.log(e);
     });
-  } else{
-    alert("Enter a valid comment")
+}
+const unlike = document.querySelector(".unlike");
+
+//show likes
+function showLikes(iD, pID) {
+  axios
+    .get(`http://localhost:4600/like/likesOfOne/${iD}`, {
+      headers: {
+        token: localStorage.getItem("tokenToUse"),
+      },
+    })
+    .then((res) => {
+      const noOfLikes = res.data.result.length;
+
+      console.log(noOfLikes);
+      const paragraphId = document.getElementById(pID);
+      if (paragraphId) {
+        paragraphId.textContent = noOfLikes;
+      }
+    });
+}
+
+//function for adding comment
+
+function addComment(iD, commentInputId) {
+  const commentedText = document.getElementById(commentInputId).value;
+
+  if (commentedText.trim() !== "") {
+    axios
+      .post(
+        "http://localhost:4600/commentActions/createComment",
+
+        {
+          PostID: iD,
+          CommentText: commentedText,
+          UserID: localStorage.getItem("UserID"),
+        },
+
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+            token: localStorage.getItem("tokenToUse"),
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        commentedText = "";
+        location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
+    alert("Enter a valid comment");
   }
 }
 
 //
 function fetchAndDisplayComments(postID, commentsContainer) {
-  
-  
-  axios.get(`http://localhost:4600/commentActions/commentsOfOne/${postID}`)
+  axios
+    .get(`http://localhost:4600/commentActions/commentsOfOne/${postID}`)
     .then((response) => {
       const comments = response.data.result[0];
-      
-      let commentsContainered=document.getElementById(`${commentsContainer}`)
-      if(commentsContainered.style.display==='none'){
-        commentsContainered.style.display='block'
-        let commentsHTML = '';
-      
+
+      let commentsContainered = document.getElementById(`${commentsContainer}`);
+      if (commentsContainered.style.display === "none") {
+        commentsContainered.style.display = "block";
+        let commentsHTML = "";
+
         comments.forEach((comment) => {
-          const subCommentId=`subCommentDiv-${comment.CommentID}`
-          const subCommentValue=`SubCommentValue-${comment.CommentID}`
-          
+          const subCommentId = `subCommentDiv-${comment.CommentID}`;
+          const subCommentValue = `SubCommentValue-${comment.CommentID}`;
+
           commentsHTML += `
           <div class="comentBody">
           <div class="comentHead">
@@ -419,143 +451,167 @@ function fetchAndDisplayComments(postID, commentsContainer) {
           <button type="submit" onclick=addSubComment(${comment.CommentID},'${subCommentValue}')>send</button>
           <div id="${subCommentId}" class="SubComments"></div>
           </div> `;
-          
+
           commentsContainered.innerHTML = commentsHTML;
-        })
-      } else{
-        commentsContainered.style.display='none'
+        });
+      } else {
+        commentsContainered.style.display = "none";
       }
-    
-    
-    })
-    
+    });
 }
 
 //show number of comments
-function ShowCommentsNumber(postID){
-axios.get(`http://localhost:4600/commentActions/commentsOfOne/${postID}`)
-.then((response) => {
-  const comments = response.data.result[0];
-  //console.log(comments.length)
-  const commentCount = document.getElementById(`commentCount-${postID}`)
-  if(commentCount){
-    commentCount.textContent=comments.length
-  }
-  
-console.log(comments)
-})
+function ShowCommentsNumber(postID) {
+  axios
+    .get(`http://localhost:4600/commentActions/commentsOfOne/${postID}`)
+    .then((response) => {
+      const comments = response.data.result[0];
+      //console.log(comments.length)
+      const commentCount = document.getElementById(`commentCount-${postID}`);
+      if (commentCount) {
+        commentCount.textContent = comments.length;
+      }
+
+      //console.log(comments)
+    });
 }
 //handle follow and unfollow
-const showUser=document.querySelector('.showUsers')
-const followersArea=document.querySelector('.postDisplayer')
+const showUser = document.querySelector(".showUsers");
+const followersArea = document.querySelector(".postDisplayer");
 
-followersArea.addEventListener('click',()=>{
-  
-})
+followersArea.addEventListener("click", () => {
+  window.location.reload();
+});
 
-showUser.addEventListener('click',()=>{
-  postsArea.innerHTML=''
+showUser.addEventListener("click", () => {
+  postsArea.innerHTML = "";
 
-  axios.get(`http://localhost:4600/user/allUsers`,
-  ).then((res)=>{
-    const users=res.data.result[0]
-    
-    let userHtml=''
-    users.forEach((user)=>{
-      let followID=`follow-${user.UserID}`
-      let unfollowID=`unfollow-${user.UserID}`
-      
-userHtml+=`
-<img src=${user.userProfile} alt="">
+  axios.get(`http://localhost:4600/user/allUsers`).then((res) => {
+    const users = res.data.result[0];
+
+    let userHtml = "";
+    users.forEach((user) => {
+      let followID = `follow-${user.UserID}`;
+      let unfollowID = `unfollow-${user.UserID}`;
+
+      userHtml += `
+<div class="users">
+<img src=${user.UserProfile} alt="">
 <h4>${user.Username}</h4>
-<button id='${followID}'>follow</button>
-<button id='${unfollowID}' style="display:none">unfollow</button>`
-postsArea.innerHTML=userHtml
-
-    })
-  })
-  
-})
+<button class="chat-button" onclick="initiateChat(${user.UserID})">Chat</button>
+<button id='${followID}' onclick=followUser(${user.UserID},'${unfollowID}','${followID}',${user.UserID})>follow</button>
+<button id='${unfollowID}' style="display:none" onclick=unfollowUser(${user.UserID},'${unfollowID}','${followID}')>unfollow</button>
+</div>`;
+      postsArea.innerHTML = userHtml;
+    });
+  });
+});
 //handle following a user
-function followUser(followeeId,unfollowId,followId){
-const unfollowBtn=document.getElementById(unfollowId)
-followId=document.getElementById(followId)
-unfollowBtn.style.display='block'
+function followUser(followeeId, stopfollowBtnId, followBtnId, userId) {
+  const unfollowBtn = document.getElementById(stopfollowBtnId);
+  const followBtn = document.getElementById(followBtnId);
+  followBtn.style.display = "none";
+  unfollowBtn.style.display = "block";
 
   axios
-  .post(
-    "http://localhost:4600/followActions/follow",
+    .post(
+      "http://localhost:4600/followActions/follow",
 
-    {
-      UserID:localStorage.getItem('UserID'),
-      FollowerUserID:followeeId
-  },
-
-    {
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json"
+      {
+        UserID: localStorage.getItem("UserID"),
+        FollowerUserID: `${followeeId}`,
       },
-    }
-  )
-  .then((response) => {
-    console.log(response.data);
-  
-  })
-  .catch((e) => {
-    console.log(e);
-  });
 
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+      followNotification(userId);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+//unfollow a user
+function unfollowUser(followeeId, stopfollowBtnId, followBtnId) {
+  const unfollowBtn = document.getElementById(stopfollowBtnId);
+  const followBtn = document.getElementById(followBtnId);
+  followBtn.style.display = "block";
+  unfollowBtn.style.display = "none";
+
+  axios
+    .post(
+      "http://localhost:4600/followActions/unfollow",
+
+      {
+        UserID: localStorage.getItem("UserID"),
+        FollowerUserID: `${followeeId}`,
+      },
+
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 }
 
 //adding subComments
-function addSubComment(comentId,subCommentValue){
-  const subCommentContent=document.getElementById(subCommentValue).value
+function addSubComment(comentId, subCommentValue) {
+  const subCommentContent = document.getElementById(subCommentValue).value;
   axios
     .post(
       "http://localhost:4600/subComment/addSubComment",
 
       {
         CommentID: comentId,
-        UserID: localStorage.getItem('UserID'),
+        UserID: localStorage.getItem("UserID"),
         SubCommentContent: subCommentContent,
       },
 
       {
         headers: {
           Accept: "application/json",
-          "Content-type": "application/json"
+          "Content-type": "application/json",
         },
       }
     )
     .then((response) => {
-     // console.log(response.data);
-     window.location.reload()
-    
+      // console.log(response.data);
+      window.location.reload();
     })
     .catch((e) => {
       console.log(e);
     });
-
 }
 
 //Display Subcomments
-function displaySubComments(commentId,subCommentId){
+function displaySubComments(commentId, subCommentId) {
+  axios
+    .get(`http://localhost:4600/subComment/viewAllSubComments/${commentId}`)
+    .then((response) => {
+      const comments = response.data.result[0];
 
-axios.get(`http://localhost:4600/subComment/viewAllSubComments/${commentId}`)
-.then((response) => {
-  const comments = response.data.result[0];
-  
-  
-  let subCommentContainer=document.getElementById(subCommentId)
-  if(subCommentContainer.style.display==='none'){
-    subCommentContainer.style.display='block'
-    let SubcommentsHTML = '';
-  
-    comments.forEach((comment) => {
-     
-      
-      SubcommentsHTML += `
+      let subCommentContainer = document.getElementById(subCommentId);
+      if (subCommentContainer.style.display === "none") {
+        subCommentContainer.style.display = "block";
+        let SubcommentsHTML = "";
+
+        comments.forEach((comment) => {
+          SubcommentsHTML += `
       <div class="comentBody">
       <div class="comentHead">
       <img src=${comment.SubCommentProfileImage} alt="">
@@ -565,25 +621,98 @@ axios.get(`http://localhost:4600/subComment/viewAllSubComments/${commentId}`)
       <p>${comment.SubCommentContent}</p>
     
       </div> `;
-      
-      subCommentContainer.innerHTML = SubcommentsHTML;
-    })
-  } else{
-    subCommentContainer.style.display='none'
-  }
 
-})
-
+          subCommentContainer.innerHTML = SubcommentsHTML;
+        });
+      } else {
+        subCommentContainer.style.display = "none";
+      }
+    });
 }
 //get user details after login
-const Username=document.querySelector('.Username')
-const UserProfileImg=document.querySelector('.UserProfile')
-const UserEmail=document.querySelector('.UserEmail')
+const Username = document.querySelector(".Username");
+const UserProfileImg = document.querySelector(".UserProfile");
+const UserEmail = document.querySelector(".UserEmail");
 
-UserEmail.textContent=localStorage.getItem('Email')
-Username.textContent=localStorage.getItem('Username')
-UserProfileImg.src=localStorage.getItem('UserProfile')
+UserEmail.textContent = localStorage.getItem("Email");
+Username.textContent = localStorage.getItem("Username");
+UserProfileImg.src = localStorage.getItem("UserProfile");
 
+//send notification functions
+function followNotification(userId) {
+  axios
+    .post(
+      "http://localhost:4600/notification/send",
 
+      {
+        UserID: userId,
+        SenderID: localStorage.getItem("UserID"),
+        NotificationText: `${localStorage.getItem(
+          "Username"
+        )}started Following You!`,
+      },
 
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
 
+//like post notification
+function likeNotification(userId) {
+  axios
+    .post(
+      "http://localhost:4600/notification/send",
+
+      {
+        UserID: userId,
+        SenderID: localStorage.getItem("UserID"),
+        NotificationText: `${localStorage.getItem(
+          "Username"
+        )} started Following You!`,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+///Displaying Notifications
+axios
+  .get(
+    `http://localhost:4600/notification/get/${localStorage.getItem("UserID")}`,
+    {
+      headers: {
+        token: localStorage.getItem("tokenToUse"),
+      },
+    }
+  )
+  .then((res) => {
+    console.log(res.data.result[0]);
+    let notifications = res.data.result[0];
+    let html = "";
+    notifications.forEach((notification) => {
+      html += `
+        <img class="notImg" src=${notification.UserProfile} alt="">
+        <p>${notification.NotificationText}</p>`;
+      Notification.innerHTML = html;
+    });
+  });

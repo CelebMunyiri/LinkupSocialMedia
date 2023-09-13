@@ -1,27 +1,31 @@
-// Import the Socket.io client library
-import io from 'socket.io-client';
+const io = require('socket.io')(4600)
 
-// Create a Socket.io client instance and connect to the server
-const socket = io('http://localhost:4600'); // Replace with your server's URL
+const users = {}
+const typingUsers = {}; 
+app.use(bodyParser.json());
 
-// Emit the 'joinRoom' event to join a specific chat room (replace 'roomID' with the actual room identifier)
-socket.emit('joinRoom', 'room:2-1');
 
-// Listen for the 'isTyping' event from the server
-socket.on('isTyping', (senderID) => {
-    console.log(`User with ID ${senderID} is typing...`);
-    // You can update the UI to display a typing indicator or handle it as needed.
+// WebSocket for messaging
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+
+  socket.on('joinRoom', (room) => {
+    socket.join(room);
+  });
+
+  socket.on('typing', ({ senderID, receiverID }) => {
+    io.to(`room:${senderID}-${receiverID}`).emit('isTyping', senderID);
+  });
+
+  // Handle messaging events
+  socket.on('send-chat-message', ({ senderID, receiverID, message }) => {
+    // Save the message to the database and broadcast to the room
+  });
+
+  // Disconnect event
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
 });
 
-// Use httpClient to send messages and interact with your server's endpoints
-// ...
 
-// When you want to notify that the user is typing, emit a 'typing' event to the server
-function notifyTyping() {
-    socket.emit('typing', { senderID: 2, receiverID: 1 });
-    // Replace 'myUserID' and 'otherUserID' with the actual user IDs
-}
-
-// Call the notifyTyping function when the user starts typing in your UI
-// ...
-notifyTyping()

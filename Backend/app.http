@@ -51,8 +51,8 @@ POST http://localhost:4600/followActions/unfollow
 Content-Type: application/json
 
 {
-    "UserID":"2",
-    "FollowerUserID":"1"
+    "UserID":"1",
+    "FollowerUserID":"2"
 }
 
 
@@ -124,9 +124,9 @@ Content-Type: application/json
 }
 
 ###unlike post
-DELETE http://localhost:4600/like/unlike/1
+DELETE http://localhost:4600/like/unlike/1002
 Content-Type: application/json
-
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6ImRhdmlkLm13YW5naUB0aGVqaXR1LmNvbSIsIkNyZWF0ZWRBdCI6IjIwMjMtMDktMTFUMDA6MDA6MDAuMDAwWiIsImlhdCI6MTY5NDUzOTU4MiwiZXhwIjoxNjk0NTQzMTgyfQ.PYj4MwOYiGHdP0Voalgk6fSM3ClJ6Lznq_RCp_QPIpg
 
 ###Likes of one
 GET http://localhost:4600/like/likesOfOne/1002
@@ -162,7 +162,7 @@ Content-Type: application/json
 {
     "SenderID":"2",
     "ReceiverID":"1",
-    "MessageContent":"Hello Bro"
+    "MessageContent":"wagwan"
 }
 
 

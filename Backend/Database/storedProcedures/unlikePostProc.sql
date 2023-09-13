@@ -1,8 +1,7 @@
-CREATE OR ALTER PROCEDURE unlikePostProc(@LikeID INT)
+CREATE OR ALTER PROCEDURE unlikePostProc(@PostID INT)
 AS 
 BEGIN 
-DELETE FROM Likes
-WHERE LikeID=@LikeID
+DELETE  FROM  Likes
+WHERE PostID=@PostID
 END;
 
-select*from Likes

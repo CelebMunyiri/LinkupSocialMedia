@@ -1,10 +1,11 @@
 const Router=require('express')
 const { likePost, unlikePost, viewLikesofOne } = require('../Controllers/likeController')
+const { verifyToken } = require('../Middleware/protectRoutes')
 
 const likeRouter=Router()
 
-likeRouter.post('/addLike',likePost)
-likeRouter.delete('/unlike/:LikeID',unlikePost)
+likeRouter.post('/addLike',verifyToken, likePost)
+likeRouter.delete('/unlike/:PostID',verifyToken,unlikePost)
 likeRouter.get('/likesOfOne/:UserID',viewLikesofOne)
 
 module.exports={

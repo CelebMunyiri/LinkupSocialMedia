@@ -23,13 +23,13 @@ return res.status(200).json({message:"Post liked as success"})
 
 const unlikePost=async(req,res)=>{
     try {
-        const LikeID=req.params.LikeID
+        const PostID=req.params.LikeID
 
         const pool=await mssql.connect(sqlConfig)
         const result=(await pool.request()
-        .input("LikeID",LikeID)
+        .input("PostID",PostID)
         .execute("unlikePostProc"))
-        if(result.rowsAffected==1){
+        if(result.rowsAffected){
             return res.status(200).json({message:"Post unliked successfully"})
         } else{
             return res.status(401).json({message:"Failed to unlike post"})
