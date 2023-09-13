@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> login LinkupSocialMedia</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title> Reset LinkupSocialMedia</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -14,16 +15,18 @@
         <div class="logo">
             <img src="linkups-logo.jpg" alt="linkups logo">
         </div>
-        <form action="" class="loginForm">
+        <form action="" class="loginForm" id="emailForm">
             <p class="resMessage">Regsiterd</p>
             <h1>Reset Password</h1>
-            
             <input type="email" placeholder="Email" class="userEmail">
-            
             <button type="submit" class="signup">Send</button>
-        
+        </form>
+        <form action="" class="resetForm">
+            <input type="text" placeholder="Enter Reset Code" class="resetCode">
+            <input type="text" placeholder="Enter new Password" class="newPassword">
+            <button type="submit">Submit</button>
         </form>
     </section>
-    <script src="login.js"></script>
+    <script src="reset.js"></script>
 </body>
 </html>

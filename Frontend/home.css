@@ -1,13 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@100;300;500;600;700&family=Inter:wght@100;200;400;800;900&family=Josefin+Sans:wght@400;700&family=Manrope:wght@200&family=Merienda:wght@300;600&family=Merriweather:wght@300&family=Outfit:wght@700&family=Overpass:wght@400;700&family=Quicksand&display=swap');
+
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    
+    box-sizing: border-box; 
 } 
 body{
     width: 100vw;
     height: 100vh;
 display: flex;
+font-family: 'Josefin Sans', sans-serif;
+}
+p{
+    color: black;
 }
 .navigation{
     width: 25%;
@@ -40,7 +45,7 @@ display: flex;
     align-items: center;
     cursor: pointer;
 }
-.messages, .communities, .profile{
+.messages, .watch, .profile{
     width: 50%;
     display: flex;
     align-items: center;
@@ -166,15 +171,20 @@ display: hidden;
     justify-content: space-evenly;
 }
 .post-head img{
-    width: 10%;
-    height: 90%;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
 }
 .post-content img{
     width: 100px;
     height: 300px;
 }
-
+button{
+    color: white;
+    background: blue;
+    outline: none;
+    border: none;
+}
 .Explore{
     width: 100%;
     height: 100%;
@@ -434,11 +444,45 @@ border-radius: 50%;
     align-items: center;
     
 }
+.Watch{
+    width: 100%;
+    height: 100%;
+    display: none;
+    overflow-y: scroll;
+}
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+    z-index: -2;
+  }
+  .switch-btn {
+    
+    width: 150px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: medium;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  }
+  .slide .switch {
+    left: 50%;
+    background: blue;
+  }
+  .hidden {
+    background-color: blue;
+    color: #fff;
+    height: 25px;
+    width: 50px;
+  }
+  
 .notImg{
     width: 40px;
     height:40px;
     border-radius: 50%;
-    background: gray;
+    background:url('https://cdn.pixabay.com/photo/2014/04/02/10/25/man-303792_1280.png');
 }
 .post-body:not(.has-image) .image {
     display: none;

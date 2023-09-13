@@ -3,8 +3,10 @@ const home = document.querySelector(".home");
 const Home = document.querySelector(".Home");
 const postDiv = document.querySelector(".PostingDiv");
 const commentText = document.querySelector(".commentText");
+const WatchArea=document.querySelector('.Watch')
 
 home.addEventListener("click", () => {
+  home.style.color='black'
   Home.style.display = "block";
   Explore.style.display = "none";
   messagePeople.style.display = "none";
@@ -12,11 +14,13 @@ home.addEventListener("click", () => {
   Notification.style.display = "none";
   postDiv.style.display = "none";
   profileContent.style.display = "none";
+  WatchArea.style.display='none'
 });
 
 const explore = document.querySelector(".explore");
 const Explore = document.querySelector(".Explore");
 explore.addEventListener("click", () => {
+  home.style.color='black'
   Explore.style.display = "block";
   Home.style.display = "none";
   messagePeople.style.display = "none";
@@ -24,6 +28,7 @@ explore.addEventListener("click", () => {
   Notification.style.display = "none";
   postDiv.style.display = "none";
   profileContent.style.display = "none";
+  WatchArea.style.display='none'
 });
 
 const notification = document.querySelector(".notification");
@@ -37,6 +42,7 @@ notification.addEventListener("click", () => {
   Messages.style.display = "none";
   postDiv.style.display = "none";
   profileContent.style.display = "none";
+  WatchArea.style.display='none'
 });
 
 const Messages = document.querySelector(".Messages");
@@ -52,12 +58,14 @@ messagingBtn.addEventListener("click", () => {
   Messages.style.display = "none";
   postDiv.style.display = "none";
   profileContent.style.display = "none";
+  WatchArea.style.display='none'
 });
 
 messagingContainer.forEach((element) => {
   element.addEventListener("click", () => {
     Messages.style.display = "block";
     messagePeople.style.display = "none";
+    WatchArea.style.display='none'
   });
 });
 
@@ -70,6 +78,7 @@ BacktoMessages.addEventListener("click", () => {
   Notification.style.display = "none";
   Messages.style.display = "none";
   postDiv.style.display = "none";
+  WatchArea.style.display='none'
 });
 
 const backToHome = document.querySelectorAll(".backHome");
@@ -83,6 +92,7 @@ backToHome.forEach((btn) => {
     Messages.style.display = "none";
     profileContent.style.display = "none";
     postDiv.style.display = "none";
+    WatchArea.style.display='none'
   });
 });
 
@@ -103,6 +113,7 @@ postButton.addEventListener("click", () => {
   Home.style.display = "none";
   Notification.style.display = "none";
   Messages.style.display = "none";
+  WatchArea.style.display='none'
 });
 
 const profileButton = document.querySelectorAll(".profile");
@@ -118,6 +129,7 @@ profileButton.forEach((btn) => {
     Notification.style.display = "none";
     Messages.style.display = "none";
     postDiv.style.display = "none";
+    WatchArea.style.display='none'
   });
 });
 
@@ -205,6 +217,7 @@ postForm.addEventListener("submit", (e) => {
 const postsArea = document.querySelector(".lower-posts");
 postsArea.innerHTML = "";
 Notification.style.display = "none";
+WatchArea.style.display='none'
 const postsDisplayer = document.querySelector(".postDisplayer");
 
 axios
@@ -241,7 +254,7 @@ axios
       ShowCommentsNumber(post.PostID);
       hideEmptyImage(`${postImg}`);
 
-      console.log(post.ImageUrl);
+     // console.log(post.ImageUrl);
 
       html += `
      <div class="post-body">
@@ -295,10 +308,10 @@ axios
 function hideEmptyImage(imageId) {
   const checkimage = document.getElementById(`${imageId}`);
 
-  console.log(checkimage);
+
 
   if (checkimage == null || checkimage == "") {
-    // checkimage.style.display = "none";
+  
   } else {
     checkimage.style.display = "block";
   }
@@ -716,3 +729,104 @@ axios
       Notification.innerHTML = html;
     });
   });
+
+  //watching area
+  const watchBtn=document.querySelector('.watch')
+ 
+
+  watchBtn.addEventListener('click',()=>{
+    messagePeople.style.display = "none";
+    Explore.style.display = "none";
+    Home.style.display = "none";
+    Notification.style.display = "none";
+    Messages.style.display = "none";
+    profileContent.style.display = "none";
+    postDiv.style.display = "none";
+    WatchArea.style.display='block'
+//display videos
+axios
+  .get("http://localhost:4600/postActions/viewAllPosts", {
+    headers: {
+      token: localStorage.getItem("tokenToUse"),
+    },
+  })
+  .then((response) => {
+    //console.log(response.data);
+    let Posts = response.data.result;
+
+    let array1 = Posts[0];
+
+    let array2 = Posts[1];
+
+    const combinedArray = array1.map((item, index) => ({
+      ...item,
+      ...array2[index],
+    }));
+    // console.log(combinedArray);
+
+    let html = "";
+    combinedArray.forEach((post) => {
+      const commentInputId = `commentInput-${post.PostID}`;
+      const commentIconId = `commentIcon-${post.PostID}`;
+      const commentsContainerId = `commentsContainer-${post.PostID}`;
+      const pID = `likesCount-${post.PostID}`;
+      const commentCount = `commentCount-${post.PostID}`;
+      const postImg = `vid-${post.PostID}`;
+      const likeID = `like-${post.PostID}`;
+      const unlikeID = `unlike-${post.PostID}`;
+      showLikes(post.PostID, `${pID}`);
+      ShowCommentsNumber(post.PostID);
+      hideEmptyImage(`${postImg}`);
+
+
+      html += `
+     <div>
+     
+     <video class="video-container" autoplay loop>
+     <source
+       src=${post.VideoUr}
+       type="video/mp4"
+     />
+     type="video/mp4" />
+   </video>
+   <button class="switch-btn">
+   <span class="play hidden">play</span> <span class="pause">pause</span>
+   <span class="switch"></span>
+ </button>
+      
+ </div>`;
+
+      WatchArea.innerHTML = html;
+    });
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+  const btn = document.querySelector(".switch-btn");
+const video = document.querySelector(".video-container");
+const play = document.querySelector(".play");
+const pause = document.querySelector(".pause");
+
+
+btn.addEventListener("click", function () {
+  if (!btn.classList.contains("slide")) {
+    btn.classList.add("slide");
+    video.pause();
+    play.classList.add("hidden");
+    pause.classList.remove("hidden");
+  } else {
+    btn.classList.remove("slide");
+    video.play();
+    pause.classList.add("hidden");
+
+    play.classList.remove("hidden");
+  }
+});
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Space") video.play;
+  else if (e.key === "Enter") {
+    video.pause;
+  }
+});
+  })
