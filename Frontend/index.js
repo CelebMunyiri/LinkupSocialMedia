@@ -29,6 +29,7 @@ confirmPassword.addEventListener('input', () => {
 registerForm.addEventListener('submit',(e)=>{
     e.preventDefault()
 
+    if(userName.value!='' && userEmail.value!='' && confirmPassword.value!='' ){
 
     axios.post('http://localhost:4600/user/register',
      {
@@ -51,5 +52,7 @@ window.location.href='/Frontend/login.html'
       .catch((error) =>{
         console.log(error);
       })
-
+    } else{
+      alert('All filed must be filled be submmiting form')
+    }
 })

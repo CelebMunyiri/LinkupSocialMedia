@@ -1,0 +1,8 @@
+CREATE OR ALTER PROCEDURE getSingleUserDetails(@UserID INT)
+AS 
+BEGIN 
+SELECT * FROM Users
+WHERE UserID=@UserID
+END;
+
+SELECT * FROM Users

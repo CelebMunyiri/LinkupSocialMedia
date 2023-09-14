@@ -25,13 +25,18 @@ emailingForm.addEventListener('submit',(e)=>{
       )
       .then((response) => {
        
-       // console.log(response)
-       setTimeout(()=>{
-        responseMessage.textContent=response.data
-        responseMessage.style.color="green"
-       },3000)
-     resetForm.style.display='block'
-     emailingForm.style.display='none'
+        console.log(response)
+       
+responseMessage.textContent=response.data.message
+responseMessage.style.display='block'
+setTimeout(()=>{
+    responseMessage.textContent=''
+    resetForm.style.display='block'
+    emailingForm.style.display='none'
+},2000)
+       
+     
+    
 
       
       })
@@ -42,13 +47,15 @@ emailingForm.addEventListener('submit',(e)=>{
 })
 
 let code=''
-resetCode.addEventListener('onchange',()=>{
+resetCode.addEventListener('input',(e)=>{
+    e.preventDefault()
 code=resetCode.value
 console.log(code)
 })
 
 resetForm.addEventListener('submit',(e)=>{
     e.preventDefault()
+    if(code !=''){
     axios
     .post(
         `http://localhost:4600/reset/reset-password/${code}`,
@@ -66,22 +73,24 @@ resetForm.addEventListener('submit',(e)=>{
       .then((response) => {
         
         console.log(response)
-        responseMessage.textContent=response.data
+        responseMessage.textContent=response.data.message
     responseMessage.style.color="green"
      
-         setTimeout(()=>{
-           console.log(response.data);
+    console.log(response.data)
+         if(response.status==200){
+       window.location.href='./login.html'
+         }else {
+            alert('Kindly enter the correct code')
+         }
          
-           responseMessage.textContent=res.data.resMessage
-           
-         },3500)
-         window.location.href='./login.html'
        
       })
       .catch((e) => {
         console.log(e);
       })
   
-  
+    } else{
+        alert('kindly Enter your reset code')
+    }
 
 })

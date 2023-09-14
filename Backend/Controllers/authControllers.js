@@ -98,8 +98,26 @@ const viewAllUsers=async(req,res)=>{
    }
 }
 
+const getDetailsofuser=async(req,res)=>{
+    try {
+        const UserID=req.params.UserID
+        const pool=await mssql.connect(sqlConfig)
+        const result=(await pool.request()
+        .input('UserID',UserID)
+        .execute('getSingleUserDetails')).recordsets
+        if(result){
+            return res.status(200).json({result})
+        }else{
+            return res.status(402).json({message:"error fetching user details"})
+        }
+    } catch (error) {
+        return res.status(500).json({Error:error.message})
+        
+    }
+}
+
 
 
 module.exports={
-    registerUser,loginUser,updateUserBio,viewAllUsers
+    registerUser,loginUser,updateUserBio,viewAllUsers,getDetailsofuser
 }

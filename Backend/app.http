@@ -35,6 +35,11 @@ GET http://localhost:4600/user/allUsers
 Content-Type: application/json
 
 
+###one use details
+GET http://localhost:4600/user/oneUser/2005
+Content-Type: application/json
+
+
 ###follow actions
 ###follow
 POST http://localhost:4600/followActions/follow

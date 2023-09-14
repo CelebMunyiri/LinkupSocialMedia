@@ -179,12 +179,7 @@ display: hidden;
     width: 100px;
     height: 300px;
 }
-button{
-    color: white;
-    background: blue;
-    outline: none;
-    border: none;
-}
+
 .Explore{
     width: 100%;
     height: 100%;
@@ -310,6 +305,9 @@ padding: 20px;
 .profileBody{
     width: 100%;
     height: 80%;
+    display: flex;
+    flex-direction: column;
+    
     overflow-y: scroll;
 }
 .hidden{
@@ -471,6 +469,58 @@ border-radius: 50%;
     left: 50%;
     background: blue;
   }
+  .img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    position: absolute;
+    top :110px;
+    margin-bottom: 20px;
+  }
+  .userBio{
+    width: 100%;
+    margin-left:2vw;
+    margin-top: 4vh;
+  }
+  .editProfile{
+    position: relative;
+    left: 30vw;
+    width: 10vw;
+    height: 5vh;
+    margin-top: 5px;
+    background: none;
+    border-radius: 20px;
+    border: 1px solid gray;
+    outline: none;
+    font-weight: bold;
+  }
+  
+  .updateProfile{
+    width: 90%;
+    height: 40%;
+    border: 1px solid rgb(237, 235, 235);
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px gray;
+    display: none;
+
+  }
+  .updateProfile input{
+margin-top: 10px;
+margin-left: 10px;
+  }
+  .updateProfile .UserBio{
+    border-bottom:1px solid rgb(165, 164, 164) ;
+    border-left: none;
+    padding-left:10px;
+    width: 80%;
+    border-right: none;
+    border-top: none;
+    outline: none;
+  }
+  button{
+    cursor: pointer;
+  }
   .hidden {
     background-color: blue;
     color: #fff;
@@ -486,6 +536,18 @@ border-radius: 50%;
 }
 .post-body:not(.has-image) .image {
     display: none;
+  }
+  .navigateProfile{
+    width: 100%;
+    height: 5vh;
+    align-items: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid rgb(237, 234, 234);
+  }
+  .navigateProfile p{
+    cursor: pointer;
   }
 @media screen and (max-width:600px){
     .upper-navigation{
@@ -507,11 +569,26 @@ border-radius: 50%;
         flex-direction: row;
         order: 2;
     }
+    .editProfile{
+        position: relative;
+        left: 50vw;
+        width: 25vw;
+        height: 5vh;
+        margin-top: 5px;
+        background: none;
+        border-radius: 20px;
+        border: 1px solid gray;
+        outline: none;
+        font-weight: bold;
+      }
     .content{
         width: 100%;
         height: 90%;
         overflow: hidden;
         border-bottom: 1px solid gray;
+    }
+    .userArea{
+        width: 100%;
     }
     .navigation h4{
 display: none;

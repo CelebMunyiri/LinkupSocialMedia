@@ -31,7 +31,7 @@
 </div>
 <div class="watch">
     <iconify-icon icon="ant-design:youtube-outlined" style="color: black;" class="icon"></iconify-icon>
-    <h4>Watch</h4>
+    <h4>Video</h4>
 </div>
 <div class="profile">
     <iconify-icon icon="iconamoon:profile-thin" style="color: black;" class="icon"></iconify-icon>
@@ -39,7 +39,7 @@
 </div>
 <button class="post">post<span>+</span></button>
 <div class="details">
-    <img src="chacha.jpg" alt="" class="UserProfile">
+    <img src="" alt="" class="UserProfile">
     <h4 class="Username"></h4>
     <p class="UserEmail"></p>
 </div>
@@ -117,10 +117,28 @@
             <img class="UserBackgroundImage" src="chacha.jpg" alt="">
         </div>
         <div class="profileBody">
-            <div class="backHome">
-                <iconify-icon icon="material-symbols:arrow-back"></iconify-icon>
+                <iconify-icon icon="material-symbols:arrow-back" class="backHome"></iconify-icon>
+      <img class="img" src="chacha.jpg" alt="">
+    <button class="editProfile">Edit Profile</button>
+                <div ><p class="userBio"></p></div>
+            
+            <div class="navigateProfile">
+                <p class="userPosts">Posts</p>
+                <p class="userReplies">Replies</p>
+                <p class="userFollowers">Followers <span>110</span></p>
+                <p class="userFollowings">Following <span>80</span></p>
+                
             </div>
-        </div>
+            <div class="userArea"></div>
+            <form action="" class="updateProfile">
+                <label for="bio">Update profile</label>
+<input type="text" placeholder="Type you bio here" class="UserBio">
+<label for="">profile picture</label>
+<input type="file" accept="image/*" class="profilePicture">
+<label for="">Update profile background image</label>
+<input type="file" accept="image/*" class="backgroundImage">
+<button type="submit">update</button>
+            </form>
 
     </div>
     <div class="Watch">

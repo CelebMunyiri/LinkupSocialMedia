@@ -227,7 +227,7 @@ axios
     },
   })
   .then((response) => {
-    //console.log(response.data);
+    console.log(response.data);
     let Posts = response.data.result;
 
     let array1 = Posts[0];
@@ -253,15 +253,15 @@ axios
       showLikes(post.PostID, `${pID}`);
       ShowCommentsNumber(post.PostID);
       hideEmptyImage(`${postImg}`);
-
-     // console.log(post.ImageUrl);
+let dayFromCreation=(`${post.CreatedAt}`).split("T")
+dayFromCreation=dayFromCreation[0]     // console.log(post.ImageUrl);
 
       html += `
      <div class="post-body">
      <div class="post-head">
          <img src=${post.Profile} alt="">
          <h4>${post.Username}</h4>
-         <p class="mail">${post.Email}</p>
+         <p class="mail">${post.Email}   <span>${dayFromCreation}</span></p>
      </div>
      <div class="post-content">
          <div class="content-part">
@@ -390,7 +390,6 @@ function showLikes(iD, pID) {
     .then((res) => {
       const noOfLikes = res.data.result.length;
 
-      console.log(noOfLikes);
       const paragraphId = document.getElementById(pID);
       if (paragraphId) {
         paragraphId.textContent = noOfLikes;
@@ -719,7 +718,7 @@ axios
     }
   )
   .then((res) => {
-    console.log(res.data.result[0]);
+    //console.log(res.data.result[0]);
     let notifications = res.data.result[0];
     let html = "";
     notifications.forEach((notification) => {
@@ -782,12 +781,12 @@ axios
       html += `
      <div>
      
-     <video class="video-container" autoplay loop>
+     <video class="video-container" controls>
      <source
-       src=${post.VideoUr}
+       src=${post.VideoUrl}
        type="video/mp4"
      />
-     type="video/mp4" />
+     type="video/mp4"  />
    </video>
    <button class="switch-btn">
    <span class="play hidden">play</span> <span class="pause">pause</span>
@@ -796,7 +795,7 @@ axios
       
  </div>`;
 
-      WatchArea.innerHTML = html;
+    //WatchArea.innerHTML = html;
     });
   })
   .catch((e) => {
@@ -830,3 +829,224 @@ document.addEventListener("keydown", function (e) {
   }
 });
   })
+  //displaying the update form
+  const editButton=document.querySelector('.editProfile')
+
+  
+
+  //working on user profile
+  let userBackgroundImg=document.querySelector('.UserBackgroundImage')
+  let img=document.querySelector('.img')
+  let userBio=document.querySelector('.userBio')
+
+  
+
+  const updateProfile=document.querySelector('.updateProfile')
+  const UserBio=document.querySelector('.UserBio')
+  const profilePicture=document.querySelector('.profilePicture')
+  const backgroundImage=document.querySelector('.backgroundImage')
+//display form update
+editButton.addEventListener('click',()=>{
+    updateProfile.style.display='block'
+    console.log('helooo')
+})
+//hide form update
+window.addEventListener('click',()=>{
+ // updateProfile.style.display='none'
+})
+
+  
+let profile=''
+let BackgroundPic=''
+  profilePicture.addEventListener("change", (event) => {
+    const target = event.target;
+    const files = target.files;
+    console.log(files);
+    if (files) {
+      const formData = new FormData();
+      formData.append("file", files[0]);
+      formData.append("upload_preset", "Linkup");
+      formData.append("cloud_name", "dhbfxndxb");
+  
+      fetch("https://api.cloudinary.com/v1_1/dhbfxndxb/image/upload", {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((res) => (profile = res.url));
+    }
+  })
+
+  backgroundImage.addEventListener("change", (event) => {
+    const target = event.target;
+    const files = target.files;
+    console.log(files);
+    if (files) {
+      const formData = new FormData();
+      formData.append("file", files[0]);
+      formData.append("upload_preset", "Linkup");
+      formData.append("cloud_name", "dhbfxndxb");
+  
+      fetch("https://api.cloudinary.com/v1_1/dhbfxndxb/image/upload", {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((res) => (BackgroundPic = res.url));
+    }
+  })
+
+  updateProfile.addEventListener('submit',(e)=>{
+    e.preventDefault()
+    axios
+    .put(
+      `http://localhost:4600/user/update/${localStorage.getItem('UserID')}`,
+
+      {
+        UserBio: UserBio.value,
+        UserProfile: profile,
+        UserBackgroundImage: BackgroundPic,
+        
+      },
+
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+          token: localStorage.getItem("tokenToUse"),
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+
+      location.reload();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  })
+
+  
+ 
+//fetch details from the Api if not updated profile
+
+axios
+    .get(`http://localhost:4600/user/oneUser/${localStorage.getItem('UserID')}`,
+    {
+      headers: {
+        token: localStorage.getItem("tokenToUse"),
+      },
+    }
+    )
+    .then((response) =>{
+      let user=response.data.result[0][0]
+      console.log(user)
+      console.log('1234')
+      userBio.textContent=user.UserBio
+      img.src=user.UserProfile
+     userBackgroundImg.src=user.UserBackgroundImage
+     UserProfileImg.src=user.UserProfile
+    })
+
+    //implementing the user profile selections
+const userPosts=document.querySelector('.userPosts')
+const userReplies=document.querySelector('.userReplies')
+const userFollowers=document.querySelector('.userFollowers')
+const userFollowings=document.querySelector('.userFollowings')
+const userArea=document.querySelector('.userArea')
+
+//displaying user posts
+function userPosting(){
+  userArea.innerHTML=''
+  axios
+  .get("http://localhost:4600/postActions/viewAllPosts", {
+    headers: {
+      token: localStorage.getItem("tokenToUse"),
+    },
+  })
+  .then((response) => {
+    console.log(response.data);
+    let Posts = response.data.result;
+
+    let array1 = Posts[0];
+
+    let array2 = Posts[1];
+
+    const combinedArray = array1.map((item, index) => ({
+      ...item,
+      ...array2[index],
+    }));
+    // console.log(combinedArray);
+    let filteredArray=combinedArray.filter(items=>items.UserID==localStorage.getItem('UserID'))
+    console.log(filteredArray)
+
+    let html = "";
+    filteredArray.forEach((post) => {
+      const commentInputId = `commentInput-${post.PostID}`;
+      const commentIconId = `commentIcon-${post.PostID}`;
+      const commentsContainerId = `commentsContainer-${post.PostID}`;
+      const pID = `likesCount-${post.PostID}`;
+      const commentCount = `commentCount-${post.PostID}`;
+      const postImg = `img-${post.PostID}`;
+      const likeID = `like-${post.PostID}`;
+      const unlikeID = `unlike-${post.PostID}`;
+      showLikes(post.PostID, `${pID}`);
+      ShowCommentsNumber(post.PostID);
+      hideEmptyImage(`${postImg}`);
+let dayFromCreation=(`${post.CreatedAt}`).split("T")
+dayFromCreation=dayFromCreation[0]     // console.log(post.ImageUrl);
+
+      html += `
+     <div class="post-body">
+     <div class="post-head">
+         <img src=${post.Profile} alt="">
+         <h4>${post.Username}</h4>
+         <p class="mail">${post.Email}   <span>${dayFromCreation}</span></p>
+     </div>
+     <div class="post-content">
+         <div class="content-part">
+             <p>${post.PostContent}</p>`
+
+
+             html += (post.ImageUrl !== null ? `<img id="${postImg}" src=${post.ImageUrl} alt="">` : `<p style="padding:20px; font-size:30px; font-weight:bold;display:none">${post.PostContent[0]}</p>` ) 
+         
+         html += `</div>
+         <div class="reactionPart">
+             <div class="reaction">
+                 <iconify-icon id="${commentIconId}" onclick=fetchAndDisplayComments(${post.PostID},'${commentsContainerId}') class="commenti" icon="iconamoon:comment-light" style="color: black; cursor:pointer"></iconify-icon>
+                 <p id="${commentCount}"></p>
+             </div>
+             <div class="reaction">
+
+             </div>
+             <div class="reaction">
+                 <iconify-icon class="like" id="${likeID}" onclick=likePost(${post.PostID},"${unlikeID}","${likeID}",${post.UserID}) icon="fluent-mdl2:like" style="color: black;"></iconify-icon>
+                 <iconify-icon class="unlike" id="${unlikeID}" onclick=unlikePost(${post.PostID},"${unlikeID}","${likeID}") icon="iconamoon:like-fill" style="color: blue;"></iconify-icon>
+                 <p id="${pID}"></p>
+             </div>
+         </div>
+         <div class="commentSection" style="display:block">
+             <input type="text" class="commentText" id="${commentInputId}" placeholder="comment here">
+             <button type="submit" onclick=addComment(${post.PostID},'${commentInputId}')>send</button>
+             </div>
+             <div id="${commentsContainerId}" class="comments-container" style="display: none;">
+             
+     </div>
+     </div>
+       
+ </div>
+ 
+ </div>`;
+
+      userArea.innerHTML = html;
+    });
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+
+}
+
+userPosting()
+userPosts.addEventListener('click',userPosting())

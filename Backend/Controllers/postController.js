@@ -58,6 +58,14 @@ const viewAllPosts=async(req,res)=>{
     }
 }
 
+const getPostsofOne=async(req,res)=>{
+    try {
+        const UserID=req.params.UserID
+    } catch (error) {
+        return res.status(500).json({error:error.message})
+    }
+}
+
 module.exports={
     createPost,deletePost, viewAllPosts
 }
