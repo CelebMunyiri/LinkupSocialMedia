@@ -211,6 +211,7 @@ padding: 20px;
     width: 100%;
     height: 100%;
     display: none;
+    overflow-y: scroll;
 }
 .DisplayMessaging{
     width: 100%;
@@ -449,13 +450,11 @@ border-radius: 50%;
     overflow-y: scroll;
 }
 .video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
+    
+    
     width: 100%;
     height: 50vh;
-    object-fit: cover;
-    z-index: -2;
+    
   }
   .switch-btn {
     
@@ -548,6 +547,26 @@ margin-left: 10px;
   }
   .navigateProfile p{
     cursor: pointer;
+    font-weight: 200;
+  }
+  .followers{
+    width: 100%;
+    height: 10vh;
+    margin-top: 10px;
+  }
+  .followers img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+    
+  }
+  td{
+    width: 50%;
+    margin: auto;
+  }
+  .followers td{
+    width: 50%;
   }
 @media screen and (max-width:600px){
     .upper-navigation{

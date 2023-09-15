@@ -6,7 +6,7 @@ const likeRouter=Router()
 
 likeRouter.post('/addLike',verifyToken, likePost)
 likeRouter.delete('/unlike/:PostID',verifyToken,unlikePost)
-likeRouter.get('/likesOfOne/:UserID',viewLikesofOne)
+likeRouter.get('/likesOfOne/:PostID',viewLikesofOne)
 
 module.exports={
     likeRouter

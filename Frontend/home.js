@@ -227,7 +227,7 @@ axios
     },
   })
   .then((response) => {
-    console.log(response.data);
+   // console.log(response.data);
     let Posts = response.data.result;
 
     let array1 = Posts[0];
@@ -321,9 +321,11 @@ function hideEmptyImage(imageId) {
 const like = document.querySelector(".like");
 function likePost(id, unlikeId, likeId, ID) {
   const unlikeBtn = document.getElementById(unlikeId);
-  unlikeBtn.style.display = "block";
+ 
   const likeBtn = document.getElementById(likeId);
+  unlikeBtn.style.display = "block";
   likeBtn.style.display = "none";
+
   axios
     .post(
       "http://localhost:4600/like/addlike",
@@ -345,10 +347,17 @@ function likePost(id, unlikeId, likeId, ID) {
       console.log(response.data);
       //console.log(id);
       likeNotification(ID);
+      location.reload()
+      window.addEventListener('load',()=>{
+        unlikeBtn.style.display = "block";
+        likeBtn.style.display = "none";
+      })
+      
     })
     .catch((e) => {
       console.log(e);
     });
+  
 }
 
 //unlike a post
@@ -388,12 +397,12 @@ function showLikes(iD, pID) {
       },
     })
     .then((res) => {
-      const noOfLikes = res.data.result.length;
+      const noOfLikes = res.data.result[0].length;
 
       const paragraphId = document.getElementById(pID);
-      if (paragraphId) {
+
         paragraphId.textContent = noOfLikes;
-      }
+      
     });
 }
 
@@ -690,7 +699,7 @@ function likeNotification(userId) {
         SenderID: localStorage.getItem("UserID"),
         NotificationText: `${localStorage.getItem(
           "Username"
-        )} started Following You!`,
+        )} Liked You Post!`,
       },
       {
         headers: {
@@ -722,9 +731,13 @@ axios
     let notifications = res.data.result[0];
     let html = "";
     notifications.forEach((notification) => {
-      html += `
-        <img class="notImg" src=${notification.UserProfile} alt="">
-        <p>${notification.NotificationText}</p>`;
+      html += `<table>
+      <tr>
+      <td>
+        <img class="notImg" src=${notification.UserProfile} alt=""></td>
+        <td>${notification.NotificationText}</td>
+       </tr>
+        </table>`;
       Notification.innerHTML = html;
     });
   });
@@ -795,7 +808,7 @@ axios
       
  </div>`;
 
-    //WatchArea.innerHTML = html;
+    WatchArea.innerHTML = html;
     });
   })
   .catch((e) => {
@@ -941,8 +954,8 @@ axios
     )
     .then((response) =>{
       let user=response.data.result[0][0]
-      console.log(user)
-      console.log('1234')
+     // console.log(user)
+     // console.log('1234')
       userBio.textContent=user.UserBio
       img.src=user.UserProfile
      userBackgroundImg.src=user.UserBackgroundImage
@@ -966,7 +979,7 @@ function userPosting(){
     },
   })
   .then((response) => {
-    console.log(response.data);
+    //console.log(response.data);
     let Posts = response.data.result;
 
     let array1 = Posts[0];
@@ -979,7 +992,7 @@ function userPosting(){
     }));
     // console.log(combinedArray);
     let filteredArray=combinedArray.filter(items=>items.UserID==localStorage.getItem('UserID'))
-    console.log(filteredArray)
+    //console.log(filteredArray)
 
     let html = "";
     filteredArray.forEach((post) => {
@@ -1002,7 +1015,7 @@ dayFromCreation=dayFromCreation[0]     // console.log(post.ImageUrl);
      <div class="post-head">
          <img src=${post.Profile} alt="">
          <h4>${post.Username}</h4>
-         <p class="mail">${post.Email}   <span>${dayFromCreation}</span></p>
+         <p class="mail">${post.Email}</p>
      </div>
      <div class="post-content">
          <div class="content-part">
@@ -1049,4 +1062,154 @@ dayFromCreation=dayFromCreation[0]     // console.log(post.ImageUrl);
 }
 
 userPosting()
-userPosts.addEventListener('click',userPosting())
+userPosts.addEventListener('click',()=>{
+  userPosting()})
+//displaying followers of the user
+const followerDisplay=document.querySelector('.followerDisplay')
+
+userFollowers.addEventListener('click',()=>{
+  userArea.innerHTML=''
+
+  axios
+  .get(`http://localhost:4600/followActions/viewfollowers/${localStorage.getItem('UserID')}`, {
+    headers: {
+      token: localStorage.getItem("tokenToUse"),
+    },
+  })
+  .then((response) => {
+    let users=response.data.result[0]
+    followerDisplay.textContent=users.length
+    //console.log(users)
+    let Followhtml=''
+    users.forEach(user=>{
+      Followhtml+=`<div class='followers'>
+      <img src=${user.FollowerProfile}>
+      <p>${user.FollowingUsername}</p>
+      </div>`
+      userArea.innerHTML=Followhtml
+    })
+  })
+
+})
+//displaying following
+const followingDisplay=document.querySelector('.followingDisplay')
+userFollowings.addEventListener('click',()=>{
+  userArea.innerHTML=''
+
+  axios
+  .get(`http://localhost:4600/followActions/viewfollowing/${localStorage.getItem('UserID')}`, {
+    headers: {
+      token: localStorage.getItem("tokenToUse"),
+    },
+  })
+  .then((response) => {
+    let users=response.data.result[0]
+    followingDisplay.textContent=users.length
+    //console.log(users)
+    let Followhtml=''
+    users.forEach(user=>{
+      Followhtml+=`
+      <table class='followers'>
+        <tr>
+          <td><img src=${user.FollowerProfile}></td>
+          <td>${user.FollowerUsername}</td>
+        </tr>
+      </table>`
+      userArea.innerHTML=Followhtml
+    })
+  })
+
+})
+
+//implementing search
+const exploreBody=document.querySelector('.explore-body')
+const search=document.querySelector('.search')
+
+search.addEventListener('input',()=>{
+  const searchText = search.value.toLowerCase().trim();
+  axios
+  .get("http://localhost:4600/postActions/viewAllPosts", {
+    headers: {
+      token: localStorage.getItem("tokenToUse"),
+    },
+  })
+  .then((response) => {
+    //console.log(response.data);
+    let Posts = response.data.result;
+
+    let array1 = Posts[0];
+
+    let array2 = Posts[1];
+
+    const combinedArray = array1.map((item, index) => ({
+      ...item,
+      ...array2[index],
+    }))
+  const filteredPosts = combinedArray.filter((posti) => {
+    const postTextContent = posti.PostContent.toLowerCase();
+    const userName = posti.Username.toLowerCase();
+    return postTextContent.includes(searchText) || userName.includes(searchText);
+  })
+  let Searchhtml = "";
+    filteredPosts.forEach((post) => {
+      const commentInputId = `commentInput-${post.PostID}`;
+      const commentIconId = `commentIcon-${post.PostID}`;
+      const commentsContainerId = `commentsContainer-${post.PostID}`;
+      const pID = `likesCount-${post.PostID}`;
+      const commentCount = `commentCount-${post.PostID}`;
+      const postImg = `img-${post.PostID}`;
+      const likeID = `like-${post.PostID}`;
+      const unlikeID = `unlike-${post.PostID}`;
+      showLikes(post.PostID, `${pID}`);
+      ShowCommentsNumber(post.PostID);
+      hideEmptyImage(`${postImg}`);
+let dayFromCreation=(`${post.CreatedAt}`).split("T")
+dayFromCreation=dayFromCreation[0]     // console.log(post.ImageUrl);
+
+Searchhtml += `
+     <div class="post-body">
+     <div class="post-head">
+         <img src=${post.Profile} alt="">
+         <h4>${post.Username}</h4>
+         <p class="mail">${post.Email}</p>
+     </div>
+     <div class="post-content">
+         <div class="content-part">
+             <p>${post.PostContent}</p>`
+
+
+             Searchhtml += (post.ImageUrl !== null ? `<img id="${postImg}" src=${post.ImageUrl} alt="">` : `<p style="padding:20px; font-size:30px; font-weight:bold;display:none">${post.PostContent[0]}</p>` ) 
+         
+             Searchhtml += `</div>
+         <div class="reactionPart">
+             <div class="reaction">
+                 <iconify-icon id="${commentIconId}" onclick=fetchAndDisplayComments(${post.PostID},'${commentsContainerId}') class="commenti" icon="iconamoon:comment-light" style="color: black; cursor:pointer"></iconify-icon>
+                 <p id="${commentCount}"></p>
+             </div>
+             <div class="reaction">
+
+             </div>
+             <div class="reaction">
+                 <iconify-icon class="like" id="${likeID}" onclick=likePost(${post.PostID},"${unlikeID}","${likeID}",${post.UserID}) icon="fluent-mdl2:like" style="color: black;"></iconify-icon>
+                 <iconify-icon class="unlike" id="${unlikeID}" onclick=unlikePost(${post.PostID},"${unlikeID}","${likeID}") icon="iconamoon:like-fill" style="color: blue;"></iconify-icon>
+                 <p id="${pID}"></p>
+             </div>
+         </div>
+         <div class="commentSection" style="display:block">
+             <input type="text" class="commentText" id="${commentInputId}" placeholder="comment here">
+             <button type="submit" onclick=addComment(${post.PostID},'${commentInputId}')>send</button>
+             </div>
+             <div id="${commentsContainerId}" class="comments-container" style="display: none;">
+             
+     </div>
+     </div>
+       
+ </div>
+ 
+ </div>`;
+
+      exploreBody.innerHTML = Searchhtml
+    })
+
+})
+})

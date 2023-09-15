@@ -64,7 +64,7 @@ const viewFollowing=async(req,res)=>{
         const pool=await mssql.connect(sqlConfig)
         const result=(await pool.request()
         .input('UserID',mssql.Int,UserID)
-        .execute('ViewFollowingByUser')).recordsets 
+        .execute('ViewFollowingByUser')).recordsets
 
         if(result){
             return res.status(200).json({result})

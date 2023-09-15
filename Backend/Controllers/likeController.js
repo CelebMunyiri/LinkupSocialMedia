@@ -41,10 +41,10 @@ const unlikePost=async(req,res)=>{
 
 const viewLikesofOne=async(req,res)=>{
    try {
-    const UserID=req.params.UserID
+    const PostID=req.params.PostID
     const pool=await mssql.connect(sqlConfig)
     const result=(await pool.request()
-    .input("UserID",UserID)
+    .input("PostID",PostID)
     .execute('viewLikesofOne')).recordsets
     if(result){
         return res.status(200).json({result})

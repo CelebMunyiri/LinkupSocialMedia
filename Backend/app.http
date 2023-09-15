@@ -62,7 +62,7 @@ Content-Type: application/json
 
 
 ###view followings
-GET http://localhost:4600/followActions/viewfollowing/2
+GET http://localhost:4600/followActions/viewfollowing/1
 
 
 ###view followers
@@ -134,7 +134,7 @@ Content-Type: application/json
 token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6ImRhdmlkLm13YW5naUB0aGVqaXR1LmNvbSIsIkNyZWF0ZWRBdCI6IjIwMjMtMDktMTFUMDA6MDA6MDAuMDAwWiIsImlhdCI6MTY5NDUzOTU4MiwiZXhwIjoxNjk0NTQzMTgyfQ.PYj4MwOYiGHdP0Voalgk6fSM3ClJ6Lznq_RCp_QPIpg
 
 ###Likes of one
-GET http://localhost:4600/like/likesOfOne/1002
+GET http://localhost:4600/like/likesOfOne/2012
 Content-Type: application/json
 
 
