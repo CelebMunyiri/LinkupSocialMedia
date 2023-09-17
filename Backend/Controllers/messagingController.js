@@ -1,7 +1,7 @@
 
 const express = require('express');
 const http = require('http');
-const socketIO = require('socket.io');
+const socketIO = require('socket.io')
 const mssql = require('mssql');
 const bodyParser = require('body-parser');
 

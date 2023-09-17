@@ -268,7 +268,7 @@ dayFromCreation=dayFromCreation[0]     // console.log(post.ImageUrl);
              <p>${post.PostContent}</p>`
 
 
-             html += (post.ImageUrl !== null ? `<img id="${postImg}" src=${post.ImageUrl} alt="">` : `<p style="padding:20px; font-size:30px; font-weight:bold;display:none">${post.PostContent[0]}</p>` ) 
+             html += (post.ImageUrl !== null ? `<img id="${postImg}" src=${post.ImageUrl} >` : `<p style="padding:20px; font-size:30px; font-weight:bold;display:none">${post.PostContent[0]}</p>` ) 
          
          html += `</div>
          <div class="reactionPart">
@@ -346,15 +346,18 @@ function likePost(id, unlikeId, likeId, ID) {
     .then((response) => {
       console.log(response.data);
       if(response.data.message=='Post unliked successfully'){
+        location.reload()
         likeBtn.style.display='block'
         likeBtn.style.color='gray'
         showLikes(id)
       } else{
         likeNotification(ID);
+        location.reload()
         likeBtn.style.display='block'
-        likeBtn.style.color='gray'
-        showLikes(id,pID)
+        likeBtn.style.color='blue'
+        
       }
+     // location.reload()
       
     })
     .catch((e) => {
@@ -1218,3 +1221,64 @@ Searchhtml += `
 
 })
 })
+//implementing chat
+const socket = io('http://localhost:3000')
+const messageContainer = document.getElementById('message-container')
+const messageForm = document.getElementById('send-container')
+const messageInput = document.getElementById('message-input')
+
+//const name = prompt('What is your name?')
+const name=localStorage.getItem('Username')
+appendMessage('You joined')
+socket.emit('new-user', name)
+
+socket.on('chat-message', data => {
+  appendMessage(`${data.name}: ${data.message}`)
+})
+
+socket.on('user-connected', name => {
+  appendMessage(`${name} connected`)
+})
+
+socket.on('user-disconnected', name => {
+  appendMessage(`${name} disconnected`)
+})
+
+messageForm.addEventListener('submit', e => {
+  e.preventDefault()
+  const message = messageInput.value
+  appendMessage(`You: ${message}`)
+  socket.emit('send-chat-message', message)
+  messageInput.value = ''
+})
+
+function appendMessage(message) {
+  const messageElement = document.createElement('div')
+  messageElement.innerText = message
+  messageContainer.append(messageElement)
+}
+
+// Add an event listener for typing
+let typingIndicator=document.querySelector('.typingIndicator')
+messageInput.addEventListener('input', () => {
+  if (messageInput.value.trim() === '') {
+    // The input field is empty, so the user is not typing
+    socket.emit('stop-typing');
+  } else {
+    // The input field is not empty, so the user is typing
+    socket.emit('typing');
+  }
+});
+
+// Listen for typing events from the server
+socket.on('user-typing', (user) => {
+  // Display that the user is typing
+  typingIndicator.innerHTML = `${user} is typing...`;
+  console.log(`${user} is typing`)
+});
+
+// Listen for stop-typing events from the server
+socket.on('user-stop-typing', (user) => {
+  // Remove the typing indicator
+  typingIndicator.innerHTML = '';
+});
