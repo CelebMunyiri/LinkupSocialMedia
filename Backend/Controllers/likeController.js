@@ -1,6 +1,8 @@
 const mssql=require('mssql')
 const { sqlConfig } = require('../Config/config')
 
+
+
 const likePost=async(req,res)=>{
     try {
         const {UserID,PostID}=req.body
@@ -56,6 +58,54 @@ const viewLikesofOne=async(req,res)=>{
    }
 }
 
+const toggleLike = async (req, res) => {
+    try {
+      const { UserID, PostID } = req.body;
+  
+      const pool = await mssql.connect(sqlConfig);
+  
+      // Check if the user has already liked the post
+      const checkLikeResult = await pool
+        .request()
+        .input("UserID", UserID)
+        .input("PostID", PostID)
+        .execute("checkLikeProc");
+  
+      const isLiked = checkLikeResult.recordset[0].Liked==1;
+      
+  
+      let result;
+      if (isLiked) {
+        // Unlike the post
+        result = await pool
+          .request()
+          .input("UserID", UserID)
+          .input("PostID", PostID)
+          .execute("unlikePostProc");
+      } else {
+        // Like the post
+        result = await pool
+          .request()
+          .input("UserID", UserID)
+          .input("PostID", PostID)
+          .execute("likePostProc");
+      }
+  
+      if (result.rowsAffected && result.rowsAffected[0] === 1) {
+        const message = isLiked ? "Post unliked successfully" : "Post liked successfully";
+        return res.status(200).json({ message });
+      } else {
+        const errorMessage = isLiked ? "Failed to unlike the post" : "Failed to like the post";
+        return res.status(401).json({ message: errorMessage });
+      }
+    } catch (error) {
+      return res.status(402).json({ Error: error.message });
+    }
+  };
+  
+ 
+  
+
 module.exports={
-    likePost,unlikePost,viewLikesofOne
+    likePost,unlikePost,viewLikesofOne,toggleLike
 }

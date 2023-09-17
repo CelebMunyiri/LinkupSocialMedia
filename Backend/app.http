@@ -120,12 +120,12 @@ Content-Type: application/json
 
 
 ###add like
-POST http://localhost:4600/like/addlike
+POST http://localhost:4600/like/toggleLike
 Content-Type: application/json
 
 {
-    "UserID":"1",
-    "PostID":"2"
+    "UserID":"3002",
+    "PostID":"9005"
 }
 
 ###unlike post

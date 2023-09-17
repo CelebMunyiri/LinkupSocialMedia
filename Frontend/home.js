@@ -323,12 +323,12 @@ function likePost(id, unlikeId, likeId, ID) {
   const unlikeBtn = document.getElementById(unlikeId);
  
   const likeBtn = document.getElementById(likeId);
-  unlikeBtn.style.display = "block";
-  likeBtn.style.display = "none";
+  
+
 
   axios
     .post(
-      "http://localhost:4600/like/addlike",
+      "http://localhost:4600/like/toggleLike",
 
       {
         PostID: id,
@@ -345,13 +345,16 @@ function likePost(id, unlikeId, likeId, ID) {
     )
     .then((response) => {
       console.log(response.data);
-      //console.log(id);
-      likeNotification(ID);
-      location.reload()
-      window.addEventListener('load',()=>{
-        unlikeBtn.style.display = "block";
-        likeBtn.style.display = "none";
-      })
+      if(response.data.message=='Post unliked successfully'){
+        likeBtn.style.display='block'
+        likeBtn.style.color='gray'
+        showLikes(id)
+      } else{
+        likeNotification(ID);
+        likeBtn.style.display='block'
+        likeBtn.style.color='gray'
+        showLikes(id,pID)
+      }
       
     })
     .catch((e) => {
@@ -670,7 +673,7 @@ function followNotification(userId) {
         SenderID: localStorage.getItem("UserID"),
         NotificationText: `${localStorage.getItem(
           "Username"
-        )}started Following You!`,
+        )} started Following You!`,
       },
 
       {
@@ -737,7 +740,8 @@ axios
         <img class="notImg" src=${notification.UserProfile} alt=""></td>
         <td>${notification.NotificationText}</td>
        </tr>
-        </table>`;
+        </table>
+        `;
       Notification.innerHTML = html;
     });
   });
@@ -1145,6 +1149,7 @@ search.addEventListener('input',()=>{
       ...item,
       ...array2[index],
     }))
+    
   const filteredPosts = combinedArray.filter((posti) => {
     const postTextContent = posti.PostContent.toLowerCase();
     const userName = posti.Username.toLowerCase();
