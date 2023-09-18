@@ -10,11 +10,11 @@ const registerUser=async(req,res)=>{
     try {
         const {Username,Email,PasswordHash}=req.body
 
-        const {error}=userRegisterValidator.validate(req.body)
+        // const {error}=userRegisterValidator.validate(req.body)
 
-        if(error){
-            res.status(422).json(error.details[0].message)
-        }
+        // if(error){
+        //     res.status(422).json(error.details[0].message)
+        // }
 
     const pool=await mssql.connect(sqlConfig)
 
@@ -30,7 +30,7 @@ if(registrationResult.rowsAffected==1){
     return res.status(401).json({message:"Failed Registering user"})
 }
     } catch (error) {
-        return res.status(401).json({Error:error.message})
+        return res.status(402).json({Error:error.message})
     }
 }
 

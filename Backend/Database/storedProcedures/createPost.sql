@@ -5,4 +5,7 @@ INSERT INTO Posts(UserID,PostContent,VideoUrl,ImageUrl)
 VALUES (@UserID,@PostContent,@VideoUrl,@ImageUrl)
 END;
 
-select * from Posts
+SELECT * FROM Users 
+
+
+

@@ -134,4 +134,5 @@ describe("Test for viewing posts a user has liked",()=>{
           expect(res.json).toHaveBeenCalledWith({message:"failed to fetch the likes of this user"})
     })
 })
+
   })

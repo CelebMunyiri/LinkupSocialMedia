@@ -346,18 +346,18 @@ function likePost(id, unlikeId, likeId, ID) {
     .then((response) => {
       console.log(response.data);
       if(response.data.message=='Post unliked successfully'){
-        location.reload()
+       // location.reload()
         likeBtn.style.display='block'
         likeBtn.style.color='gray'
         showLikes(id)
       } else{
         likeNotification(ID);
-        location.reload()
+       location.reload()
         likeBtn.style.display='block'
         likeBtn.style.color='blue'
         
       }
-     // location.reload()
+      location.reload()
       
     })
     .catch((e) => {
@@ -365,6 +365,8 @@ function likePost(id, unlikeId, likeId, ID) {
     });
   
 }
+
+
 
 //unlike a post
 function unlikePost(id, unlikeId, likeId) {
@@ -474,6 +476,7 @@ function fetchAndDisplayComments(postID, commentsContainer) {
           </div>
           <p>${comment.CommentText}</p>
           <iconify-icon onclick=displaySubComments(${comment.CommentID},'${subCommentId}') icon="iconamoon:comment-light" style="color: black;"></iconify-icon>
+          
           <input type="text" id="${subCommentValue}" class="subComment" placeholder=" add subcomment here">
           <button type="submit" onclick=addSubComment(${comment.CommentID},'${subCommentValue}')>send</button>
           <div id="${subCommentId}" class="SubComments"></div>
@@ -783,7 +786,7 @@ axios
     }));
     // console.log(combinedArray);
 
-    let html = "";
+    let videohtml = "";
     combinedArray.forEach((post) => {
       const commentInputId = `commentInput-${post.PostID}`;
       const commentIconId = `commentIcon-${post.PostID}`;
@@ -796,12 +799,12 @@ axios
       showLikes(post.PostID, `${pID}`);
       ShowCommentsNumber(post.PostID);
       hideEmptyImage(`${postImg}`);
+console.log(post.VideoUrl)
 
-
-      html += `
+      videohtml += `
      <div>
      
-     <video class="video-container" controls>
+     <video class="video-container">
      <source
        src=${post.VideoUrl}
        type="video/mp4"
@@ -815,7 +818,7 @@ axios
       
  </div>`;
 
-    WatchArea.innerHTML = html;
+    WatchArea.innerHTML = videohtml;
     });
   })
   .catch((e) => {
@@ -868,7 +871,7 @@ document.addEventListener("keydown", function (e) {
 //display form update
 editButton.addEventListener('click',()=>{
     updateProfile.style.display='block'
-    console.log('helooo')
+    //console.log('helooo')
 })
 //hide form update
 window.addEventListener('click',()=>{
@@ -961,8 +964,7 @@ axios
     )
     .then((response) =>{
       let user=response.data.result[0][0]
-     // console.log(user)
-     // console.log('1234')
+     
       userBio.textContent=user.UserBio
       img.src=user.UserProfile
      userBackgroundImg.src=user.UserBackgroundImage
@@ -1098,6 +1100,7 @@ userFollowers.addEventListener('click',()=>{
   })
 
 })
+
 //displaying following
 const followingDisplay=document.querySelector('.followingDisplay')
 userFollowings.addEventListener('click',()=>{
