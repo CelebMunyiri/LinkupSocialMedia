@@ -28,15 +28,10 @@ const sendMessage= async(req, res) => {
             .input('ReceiverID', mssql.Int, ReceiverID)
             .input('MessageContent', mssql.NVarChar, MessageContent)
             .execute('SendMessage');
-        mssql.close();
+    
 
-        // Emit the message to the specific room
-        io.to(`room:${SenderID}-${ReceiverID}`).emit('newMessage', {
-            SenderID,
-            MessageContent,
-        });
-
-        res.status(200).json({ message: 'Message sent successfully' });
+        
+       return res.status(200).json({ message: 'Message sent successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'An error occurred while sending the message' });

@@ -1,4 +1,5 @@
 const mssql=require('mssql');
+const { sendMessage } = require('./messagingController');
 
 
 
@@ -8,7 +9,7 @@ const res = {
   };
 
   describe("Test for Messagging operations, sending and receiving of messages",()=>{
-    it("Should send a message and store it in the database",()=>{
+    it("Should send a message and store it in the database",async()=>{
         const req={
             body:{
                 SenderID:"1",
@@ -24,5 +25,9 @@ const res = {
                 rowsAffected:1
             })
         })
+        await sendMessage(req,res)
+
+        expect(res.status).toHaveBeenCalledWith(200)
+        expect(res.json).toHaveBeenCalledWith({ message: 'Message sent successfully' })
     })
   })
