@@ -1,5 +1,5 @@
 const Router=require('express')
-const { likePost, unlikePost, viewLikesofOne, toggleLike } = require('../Controllers/likeController')
+const { viewLikesofOne, toggleLike,likePost,unlikePost } = require('../Controllers/likeController')
 const { verifyToken } = require('../Middleware/protectRoutes')
 
 const likeRouter=Router()

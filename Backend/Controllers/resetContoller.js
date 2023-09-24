@@ -8,7 +8,7 @@ const resetRequest=async (req, res) => {
     // Generate a unique reset token
     const resetToken = generateUniqueToken();
   
-    //here i save the reset token in the database where we have the email fro resetting password
+    //here i save the reset token in the database where we have the email for resetting password against the user email in the resetTable
     await saveResetTokenToDatabase(userEmail, resetToken, Date.now() + 3600000); // Expire after 1 hour
   
     // Send an email to the user containing the reset link

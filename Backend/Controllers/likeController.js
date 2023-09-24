@@ -72,7 +72,7 @@ const toggleLike = async (req, res) => {
         .execute("checkLikeProc");
   
       const isLiked = checkLikeResult.recordset[0].Liked==1;
-      
+      console.log(isLiked)
   
       let result;
       if (isLiked) {
@@ -89,6 +89,7 @@ const toggleLike = async (req, res) => {
           .input("UserID", UserID)
           .input("PostID", PostID)
           .execute("likePostProc");
+          //console.log(result)
       }
   
       if (result.rowsAffected && result.rowsAffected[0] === 1) {
