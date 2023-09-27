@@ -58,7 +58,34 @@ const viewAllPosts=async(req,res)=>{
     }
 }
 
+const updatePost=async(req,res)=>{
+    try {
+        const PostID=req.params.PostID
+
+        const {PostContent,ImageUrl}=req.body
+
+        const pool=await mssql.connect(sqlConfig)
+
+        const result=(await pool
+            .request()
+            .input(PostID,'PostID')
+            .input(PostContent,'PostContent')
+            .input(ImageUrl,'ImageUrl')
+            .execute('updatePostProc')
+            )
+
+            if(result.rowsAffected==1){
+                return res.status(200).json({message:"Post updated successfully"})
+            } else{
+                return res.status(401).json({message:"Failed updating the post"})
+            }
+        
+    } catch (error) {
+        return res.status(500).json({Error:error.message})
+    }
+}
+
 
 module.exports={
-    createPost,deletePost, viewAllPosts
+    createPost,deletePost, viewAllPosts,updatePost
 }
