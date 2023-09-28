@@ -323,47 +323,36 @@ function likePost(id, unlikeId, likeId, ID) {
   const unlikeBtn = document.getElementById(unlikeId);
  
   const likeBtn = document.getElementById(likeId);
-  
 
+  fetch("http://localhost:4600/like/toggleLike", {
+  method: "POST",
+  headers: {
+    Accept: "application/json",
+    "Content-type": "application/json",
+    token: localStorage.getItem("tokenToUse"),
+  },
+  body: JSON.stringify({
+    PostID: id,
+    UserID: localStorage.getItem("UserID"),
+  }),
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    if (data.message == "Post unliked successfully") {
+      likeBtn.style.display = "block";
+      likeBtn.style.color = "gray";
+      showLikes(id);
+    } else {
+      likeNotification(ID);
+      likeBtn.style.display = "block";
+      likeBtn.style.color = "blue";
+    }
+  })
+  .catch((e) => {
+    console.log(e);
+  })
 
-  axios
-    .post(
-      "http://localhost:4600/like/toggleLike",
-
-      {
-        PostID: id,
-        UserID: localStorage.getItem("UserID"),
-      },
-
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-          token: localStorage.getItem("tokenToUse"),
-        },
-      }
-    )
-    .then((response) => {
-      console.log(response.data);
-      if(response.data.message=='Post unliked successfully'){
-       // location.reload()
-        likeBtn.style.display='block'
-        likeBtn.style.color='gray'
-        showLikes(id)
-      } else{
-        likeNotification(ID);
-       location.reload()
-        likeBtn.style.display='block'
-        likeBtn.style.color='blue'
-        
-      }
-      location.reload()
-      
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  
 }
 
 
@@ -398,20 +387,21 @@ const unlike = document.querySelector(".unlike");
 
 //show likes
 function showLikes(iD, pID) {
-  axios
-    .get(`http://localhost:4600/like/likesOfOne/${iD}`, {
-      headers: {
-        token: localStorage.getItem("tokenToUse"),
-      },
-    })
-    .then((res) => {
-      const noOfLikes = res.data.result[0].length;
 
-      const paragraphId = document.getElementById(pID);
-
-        paragraphId.textContent = noOfLikes;
-      
-    });
+    fetch(`http://localhost:4600/like/likesOfOne/${iD}`, {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    "token": localStorage.getItem("tokenToUse"),
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    const noOfLikes = data.result[0].length;
+    const paragraphId = document.getElementById(pID);
+    paragraphId.textContent = noOfLikes;
+  })
+  .catch((error) => console.error("Error:", error))
 }
 
 //function for adding comment
@@ -1106,28 +1096,31 @@ const followingDisplay=document.querySelector('.followingDisplay')
 userFollowings.addEventListener('click',()=>{
   userArea.innerHTML=''
 
-  axios
-  .get(`http://localhost:4600/followActions/viewfollowing/${localStorage.getItem('UserID')}`, {
+  
+  fetch(`http://localhost:4600/followActions/viewfollowing/${localStorage.getItem('UserID')}`, {
+    method: "GET",
     headers: {
-      token: localStorage.getItem("tokenToUse"),
+      "Content-Type": "application/json",
+      "token": localStorage.getItem("tokenToUse"),
     },
   })
-  .then((response) => {
-    let users=response.data.result[0]
-    followingDisplay.textContent=users.length
-    //console.log(users)
-    let Followhtml=''
-    users.forEach(user=>{
-      Followhtml+=`
-      <table class='followers'>
-        <tr>
-          <td><img src=${user.FollowerProfile}></td>
-          <td>${user.FollowerUsername}</td>
-        </tr>
-      </table>`
-      userArea.innerHTML=Followhtml
+    .then((response) => response.json())
+    .then((data) => {
+      let users = data.result[0];
+      followingDisplay.textContent = users.length;
+      let Followhtml = '';
+      users.forEach((user) => {
+        Followhtml += `
+        <table class='followers'>
+          <tr>
+            <td><img src=${user.FollowerProfile}></td>
+            <td>${user.FollowerUsername}</td>
+          </tr>
+        </table>`;
+        userArea.innerHTML = Followhtml;
+      });
     })
-  })
+    .catch((error) => console.error("Error:", error));
 
 })
 
