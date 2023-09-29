@@ -11,7 +11,7 @@ const postRouter = Router();
 postRouter.post("/createPost", verifyToken, createPost);
 postRouter.delete("/deletePost/:PostID", deletePost);
 postRouter.get("/viewAllPosts", verifyToken, viewAllPosts);
-postRouter.put('/updatePost/:PostID',updatePost)
+postRouter.put("/updatePost/:PostID",verifyToken, updatePost)
 
 module.exports = {
   postRouter,

@@ -60,19 +60,17 @@ const viewAllPosts=async(req,res)=>{
 
 const updatePost=async(req,res)=>{
     try {
-        const PostID=req.params.PostID
+        const {PostID}=req.params
 
         const {PostContent,ImageUrl}=req.body
 
         const pool=await mssql.connect(sqlConfig)
 
-        const result=(await pool
-            .request()
+        const result=(await pool.request()
             .input(PostID,'PostID')
             .input(PostContent,'PostContent')
             .input(ImageUrl,'ImageUrl')
-            .execute('updatePostProc')
-            )
+            .execute('updatePostProc'))
 
             if(result.rowsAffected==1){
                 return res.status(200).json({message:"Post updated successfully"})

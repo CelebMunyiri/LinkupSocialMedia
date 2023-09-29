@@ -90,6 +90,15 @@ Content-Type: application/json
 token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImRhd3VkIiwiRW1haWwiOiJkYXd1ZEBnbWFpbC5jb20iLCJDcmVhdGVkQXQiOiIyMDIzLTA5LTAzVDAwOjAwOjAwLjAwMFoiLCJpYXQiOjE2OTQ0MTQwODgsImV4cCI6MTY5NDQxNzY4OH0.WWRwjv5_FPcpLzZahbshq4JLejZGrWIvNhCZV8cfr40
 
 
+###updating post
+PUT http://localhost:4600/postActions/updatePost/2
+Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6ImRhdmlkLm13YW5naUB0aGVqaXR1LmNvbSIsIkNyZWF0ZWRBdCI6IjIwMjMtMDktMTFUMDA6MDA6MDAuMDAwWiIsImlhdCI6MTY5NTkxMTgzNiwiZXhwIjoxNjk1OTE1NDM2fQ.On3749oDx0f81qdBdZqISZach1ZbmHRsmQ5URdBW28k
+
+{
+    "PostContent":"Now Arsenal is a better atleast team"
+}
+
 ###create comment
 POST http://localhost:4600/commentActions/createComment
 Content-Type: application/json
