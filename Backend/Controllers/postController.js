@@ -1,5 +1,6 @@
 const mssql=require('mssql')
 const { sqlConfig } = require('../Config/config')
+const { DB } = require('../Helpers/dbHelper')
 
 const createPost=async(req,res)=>{
     try {
@@ -64,13 +65,15 @@ const updatePost=async(req,res)=>{
 
         const {PostContent,ImageUrl}=req.body
 
-        const pool=await mssql.connect(sqlConfig)
+        // const pool=await mssql.connect(sqlConfig)
 
-        const result=(await pool.request()
-            .input(PostID,'PostID')
-            .input(PostContent,'PostContent')
-            .input(ImageUrl,'ImageUrl')
-            .execute('updatePostProc'))
+        // const result=(await pool.request()
+        //     .input(PostID,'PostID')
+        //     .input(PostContent,'PostContent')
+        //     .input(ImageUrl,'ImageUrl')
+        //     .execute('updatePostProc'))
+
+        await DB.exec('updatePostProc',{PostID,PostContent,ImageUrl})
 
             if(result.rowsAffected==1){
                 return res.status(200).json({message:"Post updated successfully"})
