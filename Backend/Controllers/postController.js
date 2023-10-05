@@ -6,13 +6,8 @@ const createPost=async(req,res)=>{
     try {
         const {UserID,PostContent,VideoUrl,ImageUrl}=req.body
 
-    const pool=await mssql.connect(sqlConfig)
-    const post=(await pool.request()
-    .input("UserID",UserID)
-    .input("PostContent",PostContent)
-    .input("VideoUrl",VideoUrl)
-    .input("ImageUrl",ImageUrl)
-    .execute('createPostProc'))
+    
+    const post=await DB.exec('createPostProc',{UserID,PostContent,VideoUrl,ImageUrl})
 
     if(post.rowsAffected==1){
         return res.status(200).json({message:'Post Created Successfully'})
@@ -28,10 +23,8 @@ const deletePost=async(req,res)=>{
     try {
         const PostID=req.params.PostID
 
-        const pool=await mssql.connect(sqlConfig)
-        const result=(await pool.request()
-        .input("PostID",PostID)
-        .execute('deletePostProc'))
+    
+        const result=await DB.exec('deletePostProc',{PostID})
         if(result.rowsAffected==1){
             return res.status(200).json({message:"Post Deleted successfully"})
         } else{
@@ -64,14 +57,6 @@ const updatePost=async(req,res)=>{
         const {PostID}=req.params
 
         const {PostContent,ImageUrl}=req.body
-
-        // const pool=await mssql.connect(sqlConfig)
-
-        // const result=(await pool.request()
-        //     .input(PostID,'PostID')
-        //     .input(PostContent,'PostContent')
-        //     .input(ImageUrl,'ImageUrl')
-        //     .execute('updatePostProc'))
 
         await DB.exec('updatePostProc',{PostID,PostContent,ImageUrl})
 
