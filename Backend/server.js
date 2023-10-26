@@ -34,6 +34,6 @@ app.use('/messaging',messagingRouter)
 app.use('/subComment',subCommentRoute)
 app.use('/reset',resetRoute)
 
-app.listen(4600,()=>{
-    console.log('server Running on port 4600')
-})
+// app.listen(4600,()=>{
+//     console.log('server Running on deployed server')
+// })
