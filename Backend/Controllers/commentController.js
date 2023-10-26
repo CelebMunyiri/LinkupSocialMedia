@@ -70,6 +70,7 @@ const displayAllComments=async(req,res)=>{
 
     if(results){
         return res.status(200).json({results})
+       // console.log(req.query)
     } else{
         return res.status(401).json({message:"Failed to load comments"})
     }
