@@ -5,4 +5,3 @@ DELETE  FROM  Likes
 WHERE PostID=@PostID AND UserID=@UserID
 END;
 
-SELECT * FROM Posts

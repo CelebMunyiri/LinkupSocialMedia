@@ -8,4 +8,3 @@ BEGIN
     VALUES (@SenderID, @ReceiverID, @MessageContent);
 END;
 
-select * FROM  Messages

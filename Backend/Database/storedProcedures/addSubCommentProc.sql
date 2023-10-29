@@ -5,4 +5,3 @@ INSERT INTO SubComments(UserID,CommentID,SubCommentContent)
 VALUES (@UserID,@CommentID,@SubCommentContent)
 END;
 
-SELECT * FROM Likes

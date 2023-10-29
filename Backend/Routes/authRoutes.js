@@ -5,7 +5,7 @@ const authRouter=Router()
 
 authRouter.post('/register',registerUser)
 authRouter.post('/login', loginUser)
-authRouter.put('/update/:UserID',verifyToken, updateUserBio)
+authRouter.put('/update/:UserID', updateUserBio)
 authRouter.get('/allUsers',viewAllUsers)
 authRouter.get('/oneUser/:UserID',getDetailsofuser)
 

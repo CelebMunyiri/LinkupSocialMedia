@@ -30,7 +30,9 @@ if(registrationResult.rowsAffected==1){
     return res.status(401).json({message:"Failed Registering user"})
 }
     } catch (error) {
+        console.log("error")
         return res.status(402).json({Error:error.message})
+        
     }
 }
 

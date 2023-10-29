@@ -20,7 +20,7 @@ const sqlConfig = {
     }
     
 }
-//port=process.env.PORT
+
 
 mssql.connect(sqlConfig)
 module.exports = {

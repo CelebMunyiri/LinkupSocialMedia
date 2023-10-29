@@ -5,4 +5,3 @@ SELECT * FROM Users
 WHERE UserID=@UserID
 END;
 
-SELECT * FROM Users
