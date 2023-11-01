@@ -1,4 +1,4 @@
-POST https://munyiri.database.windows.net/user/register
+POST https://munyiri.database.azure.net/user/register
 Content-Type: application/json
 
 {
