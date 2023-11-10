@@ -58,7 +58,7 @@ const updatePost=async(req,res)=>{
 
         const {PostContent,ImageUrl}=req.body
 
-        await DB.exec('updatePostProc',{PostID,PostContent,ImageUrl})
+        const result=await DB.exec('updatePostProc',{PostID,PostContent,ImageUrl})
 
             if(result.rowsAffected==1){
                 return res.status(200).json({message:"Post updated successfully"})
