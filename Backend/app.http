@@ -1,4 +1,4 @@
-POST https://munyiri.database.azure.net/user/register
+POST https://linkup-backend.azurewebsites.net/user/register
 Content-Type: application/json
 
 {
@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 
 ###get All users
-GET http://localhost:4600/user/allUsers
+GET http://localhost:3000/user/allUsers
 Content-Type: application/json
 
 

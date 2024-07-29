@@ -40,11 +40,24 @@ const sendMessage= async(req, res) => {
 
 // Socket.io real-time communication
 io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
+    console.log('User connected On the server', socket.id);
 
     socket.on('joinRoom', (room) => {
         socket.join(room);
     });
+
+    //sending a message
+
+    socket.on('chatMessage',async(message,senderID,ReceiverID)=>{
+        socket.emit(message);
+
+        const pool = await mssql.connect(sqlConfig)
+        await pool.request()
+            .input('SenderID', mssql.Int, senderID)
+            .input('ReceiverID', mssql.Int, ReceiverID)
+            .input('MessageContent', mssql.NVarChar, MessageContent)
+            .execute('SendMessage');
+    })
 
     socket.on('typing', ({ senderID, receiverID }) => {
         io.to(`room:${senderID}-${receiverID}`).emit('isTyping', senderID);
