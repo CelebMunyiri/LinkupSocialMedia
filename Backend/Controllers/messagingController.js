@@ -46,6 +46,19 @@ io.on('connection', (socket) => {
         socket.join(room);
     });
 
+    //sending a message
+
+    socket.on('chatMessage',async(message,senderID,ReceiverID)=>{
+        socket.emit(message);
+
+        const pool = await mssql.connect(sqlConfig)
+        await pool.request()
+            .input('SenderID', mssql.Int, senderID)
+            .input('ReceiverID', mssql.Int, ReceiverID)
+            .input('MessageContent', mssql.NVarChar, MessageContent)
+            .execute('SendMessage');
+    })
+
     socket.on('typing', ({ senderID, receiverID }) => {
         io.to(`room:${senderID}-${receiverID}`).emit('isTyping', senderID);
     });
