@@ -40,7 +40,7 @@ const sendMessage= async(req, res) => {
 
 // Socket.io real-time communication
 io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
+    console.log('User connected On the server', socket.id);
 
     socket.on('joinRoom', (room) => {
         socket.join(room);
